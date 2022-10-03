@@ -1,0 +1,13 @@
+# Filtering process
+
+filter_lines:
+    input: if list format, or convert str to list format with '\n\n'
+    goal: running 'to_filter' to inputs, then convert back to original input format
+
+split_sents:
+    running filtering methods on each paragraph (sentences), output filtered sentences
+
+# Get the Diff
+
+get_list_diff:
+    
