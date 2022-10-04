@@ -214,7 +214,7 @@ def split_sents(a, perform_filter=True):
 
     # get sentences for each paragraph
     # pars = a.split('</p><p>')
-    pars = a.split('\n\n')
+    pars = a.split('.\n\n')
     
     for p in pars:
         doc = nlp(p)
