@@ -306,7 +306,7 @@ def get_list_diff(l_old, l_new):
             ## test if the sentences are substantially similar, but for some reason ndiff marked them as different.
             if (idx < len(diffs) - 1) and (diffs[idx + 1][0] == '+'):
                 _, text_new = diffs[idx + 1][0], diffs[idx + 1][2:]
-                if get_word_diff_ratio(text, text_new) > .8:
+                if get_word_diff_ratio(text, text_new) > .9:
                     in_question = True
                     continue
 
@@ -314,6 +314,7 @@ def get_list_diff(l_old, l_new):
                 'text': '',
                 'tag': ' '
             })
+
 
         elif label == '+':
             vars_new.append({
