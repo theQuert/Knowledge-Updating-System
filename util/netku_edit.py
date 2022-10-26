@@ -10,6 +10,8 @@ import pandas as pd
 import numpy as np
 
 train_pt = torch.load('../../NetKu/full_content/train.pt')
+# train_pt = torch.load('../../NetKu/full_content/check_cands.pt')
+
 test_pt = torch.load('../../NetKu/full_content/test.pt')
 val_pt = torch.load('../../NetKu/full_content/val.pt')
 
@@ -25,6 +27,13 @@ def get_nlp():
             subprocess.run("python3 -m spacy download %s" % spacy_package, shell=True)
             nlp = spacy.load(spacy_package, disable=["tagger" "ner"])
     return nlp
+
+nlp_ner = None
+def get_nlp_ner():
+    global nlp_ner
+    if not nlp_ner:
+        nlp_ner = spacy.load(spacy_package, disable=["tagger"])  # just the parser
+    return nlp_ner
 
 to_filter = [
     'Share on WhatsApp',
