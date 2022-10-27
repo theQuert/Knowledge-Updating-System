@@ -510,6 +510,8 @@ def fixMark(src):
     input_docs = src.replace('#####', '.\n\n')
     return input_docs
 
+# Main 
+
 keep, add, sub = [], [], []
 for idx in range(len(train_pt)):
     old_ver = addMark(train_pt[idx]['document'])
