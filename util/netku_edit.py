@@ -15,9 +15,11 @@ train_pt = torch.load('../../NetKu/full_content/train.pt')
 test_pt = torch.load('../../NetKu/full_content/test.pt')
 val_pt = torch.load('../../NetKu/full_content/val.pt')
 
+spacy_package = 'en_core_web_sm'
+nlp_ner = None
+
 def get_nlp():
     nlp = None
-    spacy_package = 'en_core_web_sm'
     if not nlp:
         try:
             nlp = spacy.load(spacy_package, disable=["tagger" "ner"])
@@ -28,7 +30,6 @@ def get_nlp():
             nlp = spacy.load(spacy_package, disable=["tagger" "ner"])
     return nlp
 
-nlp_ner = None
 def get_nlp_ner():
     global nlp_ner
     if not nlp_ner:
@@ -531,3 +532,10 @@ with open('output.txt', 'w') as fwrite:
     sub_mean = np.mean(sub)
     sub_max = np.max(sub)
     fwrite.write(f'The mean of keep is {keep_mean}, mean of add is {add_mean}, mean of sub is {sub_mean}, max of each is {keep_max}, {add_max}, {sub_max}')
+
+df_keep = pd.DataFrame(keep)
+df_add = pd.DataFrame(add)
+df_sub = pd.DataFrame(sub)
+df_keep.to_csv('log_keep.csv', header=False, index=False)
+df_add.to_csv('log_add.csv', header=False, index=False)
+df_sub.to_csv('log_sub.csv', header=False, index=False)
