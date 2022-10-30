@@ -513,10 +513,12 @@ def fixMark(src):
 # Main 
 
 keep, add, sub = [], [], []
+un_labeled = []
 for idx in range(len(train_pt)):
     old_ver = addMark(train_pt[idx]['document'])
     new_ver = addMark(train_pt[idx]['summary'])
-    old, new = get_sentence_diff(fixMark(old_ver), fixMark(new_ver))
+    old, new = get_sentence_diff(old_ver, new_ver)
+    un_labeled.append(new)
     ke, ad, su = 0, 0, 0
     for i in range(len(new)):
         if new[i]['tag']==' ': ke+=1
@@ -541,3 +543,39 @@ df_sub = pd.DataFrame(sub)
 df_keep.to_csv('log_keep.csv', header=False, index=False)
 df_add.to_csv('log_add.csv', header=False, index=False)
 df_sub.to_csv('log_sub.csv', header=False, index=False)
+
+def Labeling(new):
+    labeled_data = []
+    for idx in range(len(new)):
+        if new[idx]['tag']==' ' and new[idx]['text']!='':
+            labeled_data.append(' [KEEP] ' + new[idx]['text'] + ' [/KEEP]')
+        # elif new[idx]['tag']=='-' and new[idx]['text']!='':
+        #     labeled_data.append(' [RM] '+new[idx]['text']+' [/RM]')
+        elif new[idx]['tag']=='+' and new[idx]['text']!='': 
+            labeled_data.append(' [ADD] '+new[idx]['text']+' [/ADD]')
+        # elif new[idx]['tag']=='*' and new[idx]['text']!='':
+        else:
+            labeled_data.append(' [SUB] '+new[idx]['text']+' [/SUB]')
+    return ''.join(labeled_data)
+
+labeled = []
+for idx in range(len(train_pt)):
+     labeled.append(Labeling(un_labeled[idx]))
+
+wrap = []
+for idx in range(len(train_pt)):
+    idx_content = {}
+    idx_content['content'] = labeled[idx].replace('.\n\n#####', '.\n\n')
+    wrap.append(idx_content)
+torch.save(wrap, './train_labeled.pt')
+
+def pars_and_calculatetokens(instance):
+    pars = instance.split('\n\n')
+    rec_pars = []
+    for par in pars:
+        num_add, num_sub = 0, 0
+        for token in par.split():
+            if token==['ADD']: num_add+=1
+            elif token==['SUB']: num_sub+=1
+            num_edits = num_add + num_sub
+        rec_pars.append(num_edits)
