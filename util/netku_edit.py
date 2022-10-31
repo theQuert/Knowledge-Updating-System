@@ -11,6 +11,8 @@ import numpy as np
 
 train_pt = torch.load('../../NetKu/full_content/train.pt')
 # train_pt = torch.load('../../NetKu/full_content/check_cands.pt')
+# train_pt = torch.load('../../edit_NetKu/util/train_labeled.pt')
+
 
 test_pt = torch.load('../../NetKu/full_content/test.pt')
 val_pt = torch.load('../../NetKu/full_content/val.pt')
@@ -514,9 +516,9 @@ def fixMark(src):
 
 keep, add, sub = [], [], []
 un_labeled = []
-for idx in range(len(train_pt)):
-    old_ver = addMark(train_pt[idx]['document'])
-    new_ver = addMark(train_pt[idx]['summary'])
+for idx in range(len(test_pt)):
+    old_ver = addMark(test_pt[idx]['document'])
+    new_ver = addMark(test_pt[idx]['summary'])
     old, new = get_sentence_diff(old_ver, new_ver)
     un_labeled.append(new)
     ke, ad, su = 0, 0, 0
@@ -559,23 +561,12 @@ def Labeling(new):
     return ''.join(labeled_data)
 
 labeled = []
-for idx in range(len(train_pt)):
+for idx in range(len(test_pt)):
      labeled.append(Labeling(un_labeled[idx]))
 
 wrap = []
-for idx in range(len(train_pt)):
+for idx in range(len(test_pt)):
     idx_content = {}
     idx_content['content'] = labeled[idx].replace('.\n\n#####', '.\n\n')
     wrap.append(idx_content)
-torch.save(wrap, './train_labeled.pt')
-
-def pars_and_calculatetokens(instance):
-    pars = instance.split('\n\n')
-    rec_pars = []
-    for par in pars:
-        num_add, num_sub = 0, 0
-        for token in par.split():
-            if token==['ADD']: num_add+=1
-            elif token==['SUB']: num_sub+=1
-            num_edits = num_add + num_sub
-        rec_pars.append(num_edits)
+torch.save(wrap, './test_labeled.pt')
