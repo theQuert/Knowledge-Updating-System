@@ -1,8 +1,20 @@
 import torch
+import nltk
+nltk.download('punkt')
+from nltk import word_tokenize, sent_tokenize
+from transformers import AutoTokenizer, BartTokenizerFast
 
-# train_pt = torch.load('./train_relabeled.pt')
+train_pt = torch.load('./train_relabeled.pt')
 test_pt = torch.load('./test_relabeled.pt')
 val_pt = torch.load('./val_relabeled.pt')
+
+# train_pt = torch.load('/home/a97041304/MDS_PRIMER/primer/dataset/NetKu_git/train.pt')
+# test_pt = torch.load('/home/a97041304/MDS_PRIMER/primer/dataset/NetKu_git/test.pt')
+# val_pt = torch.load('/home/a97041304/MDS_PRIMER/primer/dataset/NetKu_git/val.pt')
+
+tokenizer = BartTokenizerFast.from_pretrained('facebook/bart-base')
+# model_path = '/home/quert/MDS_PRIMER/primer/PRIMER_wcep'
+# tokenizer = AutoTokenizer.from_pretrained(model_path)
 
 def trunc_pt(relabeled_pt):
 	# For train_pt, test_pt, val_pt
@@ -10,16 +22,34 @@ def trunc_pt(relabeled_pt):
 
 	for idx in range(len(relabeled_pt)):
 		wrap_lst = []
-		# for id in range(len(relabeled_pt[idx]['document'])):
 		s = ' '
-			# filtered_str = s.join(train_pt[idx]['document'][id].split()[:1200])
-		filtered_str = s.join(relabeled_pt[idx]['document'].split()[:4096])
-		# wrap_lst.append(filtered_str)
+		sents = []
+		total_num_sents=len(nltk.sent_tokenize(relabeled_pt[idx]['document']))
+		for sent in nltk.sent_tokenize(relabeled_pt[idx]['document']):
+			sent = sent.replace('[ KEEP ]', '[KEEP]').replace('[ ADD ]', '[ADD]').replace('[ SUB ]', '[SUB]').replace(' .', '.').replace(' ,', ',').replace('[KEEP].', '. KEEP').replace(' .', '.')
+			sent = sent.replace(' [ADD].', '. [ADD]').replace(' [KEEP].', '. [KEEP]').replace(' [SUB].', '. [SUB]')
+			sent = sent.replace('KEEP', '[KEEP]').replace('ADD', '[ADD]').replace('SUB', '[SUB]')
+			sent = sent.replace('[[KEEP]]', '[KEEP]').replace('[[ADD]]', '[ADD]').replace('[[SUB]]', '[SUB]')
+			sent = sent.replace('[KEEP]', '<KEEP>').replace('[ADD]', '<ADD>').replace('[SUB]', '<SUB>')
+			sents.append(sent)
+		single = s.join(sents)
+		encoded_single = tokenizer(single, truncation=True, max_length=512)
+		single_out = tokenizer.decode(encoded_single['input_ids']).replace('<s>', '').replace('</s>', '')
+
+		sents_sec = []
+		total_num_sents=len(nltk.sent_tokenize(relabeled_pt[idx]['summary']))
+		for sent_sec in nltk.sent_tokenize(relabeled_pt[idx]['summary']):
+			sents_sec.append(sent_sec)
+		single_sec = s.join(sents_sec)
+		encoded_single_sec = tokenizer(single_sec, truncation=True, max_length=512)
+		single_out_sec = tokenizer.decode(encoded_single_sec['input_ids']).replace('<s>', '').replace('</s>', '')
+
 		idx_content = {}
-		idx_content['document'] = filtered_str 
-		idx_content['summary'] = relabeled_pt[idx]['summary']
+		idx_content['document'] = single_out
+		idx_content['summary'] = single_out_sec
 		wrap.append(idx_content)
 	torch.save(wrap, 'wcepvalid_trunc.pt')
+
 
 # Main
 path = val_pt 
