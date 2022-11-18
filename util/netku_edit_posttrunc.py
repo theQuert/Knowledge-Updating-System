@@ -22,10 +22,10 @@ def trunc_pt(relabeled_pt):
 
 	for idx in range(len(relabeled_pt)):
 		wrap_lst = []
-		s = ' '
+		s = '.\n\n'
 		sents = []
-		total_num_sents=len(nltk.sent_tokenize(relabeled_pt[idx]['document']))
-		for sent in nltk.sent_tokenize(relabeled_pt[idx]['document']):
+		# for sent in nltk.sent_tokenize(relabeled_pt[idx]['document']):
+		for sent in relabeled_pt[idx]['document'].split('.\n\n'):
 			sent = sent.replace('[ KEEP ]', '[KEEP]').replace('[ ADD ]', '[ADD]').replace('[ SUB ]', '[SUB]').replace(' .', '.').replace(' ,', ',').replace('[KEEP].', '. KEEP').replace(' .', '.')
 			sent = sent.replace(' [ADD].', '. [ADD]').replace(' [KEEP].', '. [KEEP]').replace(' [SUB].', '. [SUB]')
 			sent = sent.replace('KEEP', '[KEEP]').replace('ADD', '[ADD]').replace('SUB', '[SUB]')
@@ -33,15 +33,15 @@ def trunc_pt(relabeled_pt):
 			sent = sent.replace('[KEEP]', '<KEEP>').replace('[ADD]', '<ADD>').replace('[SUB]', '<SUB>')
 			sents.append(sent)
 		single = s.join(sents)
-		encoded_single = tokenizer(single, truncation=True, max_length=512)
+		encoded_single = tokenizer(single, truncation=True, max_length=4096)
 		single_out = tokenizer.decode(encoded_single['input_ids']).replace('<s>', '').replace('</s>', '')
 
 		sents_sec = []
 		total_num_sents=len(nltk.sent_tokenize(relabeled_pt[idx]['summary']))
-		for sent_sec in nltk.sent_tokenize(relabeled_pt[idx]['summary']):
+		for sent_sec in relabeled_pt[idx]['summary'].split('.\n\n'):
 			sents_sec.append(sent_sec)
 		single_sec = s.join(sents_sec)
-		encoded_single_sec = tokenizer(single_sec, truncation=True, max_length=512)
+		encoded_single_sec = tokenizer(single_sec, truncation=True, max_length=1024)
 		single_out_sec = tokenizer.decode(encoded_single_sec['input_ids']).replace('<s>', '').replace('</s>', '')
 
 		idx_content = {}
