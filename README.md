@@ -1,5 +1,5 @@
 # Apply fine-grained actions to NetKu dataset
-## Preprocessing 
+## Processing 
 - Run sentence-level difference encoding with `netku_edit.py`
 - Conbine the labeled non-updated information with the updated contents: `netku_edit_post.py` to re-construct the labeled pt-format file
 - Create special-token-added tokenizer with the script: `primer/script/primer_toks.py`
