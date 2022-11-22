@@ -70,11 +70,12 @@ class PRIMERSummarizerLN(pl.LightningModule):
 		
 		self.use_ddp = args.accelerator == "ddp"
 		self.docsep_token_id = self.tokenizer.convert_tokens_to_ids("<doc-sep>")
-		# self.keep_token_id = self.tokenizer.convert_tokens_to_ids("<KEEP>")
-		# self.add_token_id = self.tokenizer.convert_tokens_to_ids("<ADD>")
-		# self.sub_token_id = self.tokenizer.convert_tokens_to_ids("<SUB")
 		self.tokenizer.add_special_tokens({'additional_special_tokens': ["<KEEP>", "<ADD>", "<SUB>"]})
 		self.model.resize_token_embeddings(len(self.tokenizer))
+
+		self.keep_token_id = self.tokenizer.convert_tokens_to_ids("<KEEP>")
+		self.add_token_id = self.tokenizer.convert_tokens_to_ids("<ADD>")
+		self.sub_token_id = self.tokenizer.convert_tokens_to_ids("<SUB>")
 		
 		# self.special_tokens_dict = {'additional_special_tokens': ['<KEEP>', '<ADD>', '<SUB>']}
 		# num_added_toks = self.tokenizer.add_special_tokens(special_tokens_dict)
@@ -102,9 +103,9 @@ class PRIMERSummarizerLN(pl.LightningModule):
 
 			if self.args.join_method == "concat_start_wdoc_global":
 				attention_mask[input_ids == self.docsep_token_id] = 2
-				# attention_mask[input_ids == self.keep_token_id] = 2
-				# attention_mask[input_ids == self.add_token_id] = 2
-				# attention_mask[input_ids == self.sub_token_id] = 2
+				attention_mask[input_ids == self.keep_token_id] = 2
+				attention_mask[input_ids == self.add_token_id] = 2
+				attention_mask[input_ids == self.sub_token_id] = 2
 
 			if self.args.attention_mode == "sliding_chunks":
 				half_padding_mod = self.model.config.attention_window[0]
