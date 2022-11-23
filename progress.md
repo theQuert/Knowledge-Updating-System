@@ -75,6 +75,6 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - If we extract the `top-3`/`top-5` paragraphs, the length are short enough for model compared with the full-content scale.
 ### Goal
 - The original goal is unchanged, but we divide the task into 3 steps:
-1. Apply the labeling algorithm on sentence-level.
-2. By re-construnct our datset (consists of the paragraphs needed to be updated).
-3. Merge the output with our original dataset, we prove our method is capable to update an article given its old version and the triggered news event.
+1. Apply the labeling algorithm on sentence-level annotation.
+2. Re-construnct our datset (consists of the paragraphs which more needed to be updated).
+3. Merge the output with our original dataset, then prove our method is capable to update an full-article given its old version and the triggered news event.
