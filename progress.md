@@ -1,3 +1,4 @@
+## 2022/10/16-2022/10/23
 ### srcIndex < srcSelectDimsize
 - The input/output may be too long (PRIMERA: `input: 4096`, `output: 1024`).
 - Before fixing the spaces problem, the input and output size only work with less then 512 tokens.
@@ -64,3 +65,16 @@ model.save_pretrained('../PRIMER_wcep/new')
 tokenizer.save_pretrained('../PRIMER_wcep/new')
 ```
 
+## 2022/10/23-2022/10/30
+### Find the indices of paragraphs which needed to be updated (reconstruct new dataset)
+- Calculate the edit actions for each paragraphs (the `top-3` or `top-5` paragraphs).
+- Construct new dataset to fine-tune PRIMERA. (modify the sliding window is optional)
+## Solution to special token
+- By construncting a new dataset, the sepcial tokens are no longer to be encoded.
+### Length Problem
+- If we extract the `top-3`/`top-5` paragraphs, the length are short enough for model compared with the full-content scale.
+### Goal
+- The original goal is unchanged, but we divide the task into 3 steps:
+1. Apply the labeling algorithm on sentence-level.
+2. By re-construnct our datset (consists of the paragraphs needed to be updated).
+3. Merge the output with our original dataset, we prove our method is capable to update an article given its old version and the triggered news event.
