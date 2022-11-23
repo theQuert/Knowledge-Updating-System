@@ -5,7 +5,7 @@ import torch
 def pars_split(pt_file):
 	output_str = []
 	for idx in range(len(pt_file)):
-		single_sent = pt_file[idx]['document'].split('.\n\n')
+		single_sent = pt_file[idx]['document'].split('.\c\c')
 		num_articles = math.ceil(len(single_sent)/10) # might be 0 if #articles<10
 		check_less=0
 		articles = []
@@ -14,7 +14,7 @@ def pars_split(pt_file):
 			start_ids = [0]
 		else:
 			start_ids = [x*10 for x in range(num_articles)]
-		s = '.\n\n'
+		s = '.\c\c'
 		for id in range(len(start_ids)):
 			if len(start_ids)==1:
 				single_str = s.join(single_sent)
@@ -44,9 +44,9 @@ def wrap_pt(input_str, pt_file):
 		idx_content['document'] = input_src[idx]
 		idx_content['summary'] = pt_file[idx]['summary']
 		wrap.append(idx_content)
-	torch.save(wrap, '/home/quert/edit_NetKu/util/4096_1024_custom/wcepvalid.pt')
+	torch.save(wrap, '/home/quert/edit_NetKu/util/4096_1024_fbbart/wcepvalid.pt')
 
-pt_file = torch.load('/home/quert/edit_NetKu/util/4096_1024_custom/wcepvalid_trunc.pt')
+pt_file = torch.load('/home/quert/edit_NetKu/util/4096_1024_fbbart/wcepvalid_trunc.pt')
 input_str = pars_split(pt_file)
 wrap_pt(input_str, pt_file)
 

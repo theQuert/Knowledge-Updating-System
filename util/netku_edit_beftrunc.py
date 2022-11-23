@@ -12,9 +12,9 @@ val_pt = torch.load('./val_relabeled.pt')
 # test_pt = torch.load('/home/a97041304/MDS_PRIMER/primer/dataset/NetKu_git/test.pt')
 # val_pt = torch.load('/home/a97041304/MDS_PRIMER/primer/dataset/NetKu_git/val.pt')
 
-model_pth = '/home/quert/MDS_PRIMER/primer/PRIMER_wcep/new'
-tokenizer = AutoTokenizer.from_pretrained(model_pth)
-# tokenizer = AutoTokenizer.from_pretrained('facebook/bart-base')
+# model_pth = '/home/quert/MDS_PRIMER/primer/PRIMER_wcep/new'
+# tokenizer = AutoTokenizer.from_pretrained(model_pth)
+tokenizer = AutoTokenizer.from_pretrained('facebook/bart-base')
 
 def trunc_pt(relabeled_pt):
 	# For train_pt, test_pt, val_pt
@@ -22,7 +22,7 @@ def trunc_pt(relabeled_pt):
 
 	for idx in range(len(relabeled_pt)):
 		wrap_lst = []
-		s = '.\n\n'
+		s = '.\c\c'
 		sents = []
 		for sent in relabeled_pt[idx]['document'].split('.\n\n'):
 			sent = sent.replace('[ KEEP ]', '[KEEP]').replace('[ ADD ]', '[ADD]').replace('[ SUB ]', '[SUB]').replace(' .', '.').replace(' ,', ',').replace('[KEEP].', '. KEEP').replace(' .', '.')
@@ -50,5 +50,5 @@ def trunc_pt(relabeled_pt):
 
 
 # Main
-path = val_pt
+path = val_pt 
 trunc_pt(path)
