@@ -36,3 +36,31 @@
 - Replace '.\n\n' with '.\c\c' to fix the srcIndex problem.
 - Special tokens are not added successfully, the built-in function may not work. *Sol: Try to utilize the updated tokenizer in the main model*
 - The #outupts is more then given #instances, still needed to debug. 
+
+### Methods of adding special tokens to tokenizer
+- Huggingface's built-in function
+
+```Python
+self.docsep_token_id = self.tokenizer.convert_tokens_to_ids("<doc-sep>")
+self.tokenizer.add_special_tokens({'additional_special_tokens': ["<KEEP>", "<ADD>", "<SUB>"]})
+self.model.resize_token_embeddings(len(self.tokenizer))
+self.keep_token_id = self.tokenizer.convert_tokens_to_ids("<KEEP>")
+self.add_token_id = self.tokenizer.convert_tokens_to_ids("<ADD>")
+self.sub_token_id = self.tokenizer.convert_tokens_to_ids("<SUB>")
+
+attention_mask[input_ids == self.docsep_token_id] = 2
+attention_mask[input_ids == self.keep_token_id] = 2
+attention_mask[input_ids == self.add_token_id] = 2
+attention_mask[input_ids == self.sub_token_id] = 2
+```
+- Update existed tokenizer, and `vocab.json`
+
+```Python
+tokenizer = AutoTokenizer.from_pretrained('../PRIMER_wcep')
+model = LongformerEncoderDecoderForConditionalGeneration.from_pretrained('../PRIMER_wcep')
+tokenizer.add_tokens(['<KEEP>', '<ADD>', '<SUB>'])
+model.resize_token_embeddings(len(tokenizer))
+model.save_pretrained('../PRIMER_wcep/new')
+tokenizer.save_pretrained('../PRIMER_wcep/new')
+```
+
