@@ -11,5 +11,5 @@
 [Data](https://github.com/hhhuang/NetKu)
 
 ## References
-[PRIMERA](https://github.com/allenai/PRIMER)
-[NewsEdits](https://github.com/isi-nlp/NewsEdits)
+#### [PRIMERA](https://github.com/allenai/PRIMER)\
+#### [NewsEdits](https://github.com/isi-nlp/NewsEdits)
