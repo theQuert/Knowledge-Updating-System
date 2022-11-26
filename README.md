@@ -1,4 +1,4 @@
-# Apply fine-grained actions to NetKu dataset
+# News Event Triggered Contents Update Prediction 
 
 ## Processing 
 - Run sentence-level difference encoding with `netku_edit.py`
@@ -8,8 +8,9 @@
 - Run script to re-construcure the input data to maximum 10 paragraphs in each list from each cluster (WCEP10-like): `netku_edit_afttrunc.py`
 
 ## Source of our dataset
-[Data](https://github.com/hhhuang/NetKu)
+[Data](https://drive.google.com/drive/folders/1xF05auIp1EMd_KMHEaEu48J9meOsZSrU?usp=sharing)
 
 ## References
+#### [Source Data: NetKu](https://github.com/hhhuang/NetKu)
 #### [PRIMERA](https://github.com/allenai/PRIMER)
 #### [NewsEdits](https://github.com/isi-nlp/NewsEdits)
