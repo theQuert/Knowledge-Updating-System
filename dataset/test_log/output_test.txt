@@ -1,1 +1,0 @@
-The mean of keep is 136.7910447761194, mean of add is 16.427860696517413, mean of sub is 3.3781094527363185, max of each is 1300, 160, 109
