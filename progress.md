@@ -87,11 +87,13 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 #### May meet the alignment problem between the position from old and new paragraphs. *Make sure to check if the `#papagraphs` is same between content and summary.*
 - Combine the `top-3` paragraphs from `content` and the triggered news as our new input (`content` of our wcep-format dataset), the `summary` would be the updated information.
 - Since we extract the `top-3` paragraphs, the amount of our data will be 3-times larger.
-- Create the baseline after the extraction is done. (So, we have new baseline)
+- ***Statistics of the indices of those paragraph neeeded to be updated.***
+- Create the baseline after the extraction. (So, we will have new baseline)
 - Apply `PRIMERA-WCEP` to fine-tune our new-constructed dataset.
 - Examine the result with the baseline.
 
 ### Potential Problems
 - Since we labeled our data given the non-updated, and updated version, `top-3` or `top-5` are easy to extract.
 - Our fine-tuned model may only performs well on our NetKu dataset.
-- Maybe find the paragraphs which needed to be updated is still important. 
+- Maybe a method to find the paragraphs which needed to be updated is still important rather than update given the updated contnet.
+- 
