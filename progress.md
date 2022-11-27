@@ -69,12 +69,29 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ### Find the indices of paragraphs which needed to be updated (reconstruct new dataset)
 - Calculate the edit actions for each paragraphs (the `top-3` or `top-5` paragraphs).
 - Construct new dataset to fine-tune PRIMERA. (modify the sliding window is optional)
+
 ## Solution to special token
 - By construncting a new dataset, the sepcial tokens are no longer to be encoded.
+
 ### Length Problem
 - If we extract the `top-3`/`top-5` paragraphs, the length are short enough for model compared with the full-content scale.
+
 ### Goal
 - The original goal is unchanged, but we divide the task into 3 steps:
 1. Apply the labeling algorithm on sentence-level annotation.
 2. Re-construnct our datset (consists of the paragraphs which more needed to be updated).
 3. Merge the output with our original dataset, then prove our method is capable to update an full-article given its old version and the triggered news event.
+
+### TODO
+- Extract the `top-3` editions paragraphs from training, testing, and dev set.
+#### May meet the alignment problem between the position from old and new paragraphs. *Make sure to check if the `#papagraphs` is same between content and summary.*
+- Combine the `top-3` paragraphs from `content` and the triggered news as our new input (`content` of our wcep-format dataset), the `summary` would be the updated information.
+- Since we extract the `top-3` paragraphs, the amount of our data will be 3-times larger.
+- Create the baseline after the extraction is done. (So, we have new baseline)
+- Apply `PRIMERA-WCEP` to fine-tune our new-constructed dataset.
+- Examine the result with the baseline.
+
+### Potential Problems
+- Since we labeled our data given the non-updated, and updated version, `top-3` or `top-5` are easy to extract.
+- Our fine-tuned model may only performs well on our NetKu dataset.
+- Maybe find the paragraphs which needed to be updated is still important. 
