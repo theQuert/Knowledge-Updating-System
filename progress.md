@@ -74,7 +74,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - By construncting a new dataset, the sepcial tokens are no longer to be encoded.
 
 ### Length Problem
-- If we extract the `top-3`/`top-5` paragraphs, the length are short enough for model compared with the full-content scale.
+- If we extract the `top-3`/`top-5` paragraphs, the lengths are short enough for model compared with the full-content scale.
 
 ### Goal
 - The original goal is unchanged, but we divide the task into 3 steps:
@@ -83,16 +83,18 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 3. Merge the output with our original dataset, then prove our method is capable to update an full-article given its old version and the triggered news event.
 
 ### TODO
-- Extract the `top-3` most-edited paragraphs from training, testing, and dev set. (Extract from `relabeled` pt file)
-#### May meet the alignment problem between the position from old and new paragraphs. *Make sure to check if the `#papagraphs` is same between content and summary.*
+- Extract the `top-3` most-edited paragraphs from training, testing, and dev set. (Extract from `labeled_fixed`, and the last paragraph of train/test/val pt file to construct )
+#### May meet the alignment problem between the position from old and new paragraphs. **Make sure to check if the `#papagraphs` is same between versions.**
 - Combine the `top-3` paragraphs from `content` and the triggered news as our new input (`content` of our wcep-format dataset), the `summary` would be the updated information.
-- Since we extract the `top-3` paragraphs, the amount of our data will be 3-times larger.
-- **Statistics of the indices of those paragraph neeeded to be updated.**
+- Since we extract the `top-3` paragraphs, the amount of our extended dataset will be 3-times larger.
 - Create the baseline after the extraction. (So, we will have new baseline)
 - Apply `PRIMERA-WCEP` to fine-tune our new-constructed dataset.
 - Examine the result with the baseline.
 
-### Potential Problems
-- Since we labeled our data given the non-updated, and updated version, `top-3` or `top-5` are easy to extract.
+### Discussions
+- Since we labeled our data given the non-updated and updated version, `top-3` or `top-5` are easy to extract.
+- **#Paragraphs in the updated version is more than non-updated version after solving the alignment problems, make those instances hard to align the indices. Calculate how many instances with this problem existed in our training data. We may need to truncate the updated version?**
+- **Among the `1602` instances in our training data, there are `468` instances having more than 10 paragraphs differ from non-updated and updated contents. (29.21%)**
+- Extract the triggers from the last paragraph of NetKu dataset(full-content) to form our extended dataset.
 - Our fine-tuned model may only performs well on our NetKu dataset.
 - Maybe a method to find the paragraphs which needed to be updated is still important without the updated content.
