@@ -5,7 +5,7 @@ import torch
 def pars_split(pt_file):
 	output_str = []
 	for idx in range(len(pt_file)):
-		single_sent = pt_file[idx]['document'].split('.\c\c')
+		single_sent = pt_file[idx]['document'].split('.\\c\\c')
 		num_articles = math.ceil(len(single_sent)/10) # might be 0 if #articles<10
 		check_less=0
 		articles = []

@@ -12,9 +12,9 @@ val_pt = torch.load('./val_relabeled.pt')
 # test_pt = torch.load('/home/a97041304/MDS_PRIMER/primer/dataset/NetKu_git/test.pt')
 # val_pt = torch.load('/home/a97041304/MDS_PRIMER/primer/dataset/NetKu_git/val.pt')
 
-# model_pth = '/home/quert/MDS_PRIMER/primer/PRIMER_wcep/new'
-# tokenizer = AutoTokenizer.from_pretrained(model_pth)
-tokenizer = AutoTokenizer.from_pretrained('facebook/bart-base')
+model_pth = '/home/quert/MDS_PRIMER/primer/PRIMER_wcep/new'
+tokenizer = AutoTokenizer.from_pretrained(model_pth)
+# tokenizer = AutoTokenizer.from_pretrained('facebook/bart-base')
 
 def trunc_pt(relabeled_pt):
 	# For train_pt, test_pt, val_pt
