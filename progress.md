@@ -65,7 +65,7 @@ model.save_pretrained('../PRIMER_wcep/new')
 tokenizer.save_pretrained('../PRIMER_wcep/new')
 ```
 
-## 2022/10/23-2022/10/30
+## 2022/11/23-2022/11/30
 ### Find the indices of paragraphs which needed to be updated (reconstruct new dataset)
 - Calculate the edit actions for each paragraphs (the `top-3` or `top-5` paragraphs).
 - Construct new dataset to fine-tune PRIMERA. (modify the sliding window is optional)
@@ -95,6 +95,22 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Since we labeled our data given the non-updated and updated version, `top-3` or `top-5` are easy to extract.
 - **#Paragraphs in the updated version is more than non-updated version after solving the alignment problems, make those instances hard to align the indices. Calculate how many instances with this problem existed in our training data. We may need to truncate the updated version?**
 - **Among the `1602` instances in our training data, there are `468` instances having more than 10 paragraphs differ from non-updated and updated contents. (29.21%)**
+- Mapping method: `Updated version` -> `Non-updated version`. We have `[KEEP]`, `[SUB]`, `[ADD]` conditions. In our data, we have the `updated version with labels + news trigger` as src, and `updated version without labels` as tgt.
 - Extract the triggers from the last paragraph of NetKu dataset(full-content) to form our extended dataset.
 - Our fine-tuned model may only performs well on our NetKu dataset.
 - Maybe a method to find the paragraphs which needed to be updated is still important without the updated content.
+
+## 2022/11/30-2022/12/07
+### Change the main idea to summary generation
+- Given an old summary and the news event trigger, the model will be capable of how to modify the src (add labels to sentence-level).
+- `src`: The un-labeled non-updated summary + news trigger event knowledge. `tgt`: **Labeled** updated summary.
+- Labeling Direction: `Updated version` -> `Non-updated version`, the direction is unchanged.
+- Obtain the model generation, do the sentence editing according to the predicted labels.
+
+### TODO
+- Re-labeled the `summary`, drop the `top-k` discussions.
+- Calculate the #paragarphs between non-updated and updated version of summary.
+- Check if the last paragraph of summary is same as the last paragraph in train/test/val pt file.
+- Re-construct the dataset with summary revisions, the `util/` from `edit_data` may be still work.
+- Truncation is no longer needed.
+- Check the baseline after the new dataset is constructed.
