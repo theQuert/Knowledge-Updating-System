@@ -106,6 +106,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - `src`: The un-labeled non-updated summary + news trigger event knowledge. `tgt`: **Labeled** updated summary.
 - Labeling Direction: `Updated version` -> `Non-updated version`, the direction is unchanged.
 - Obtain the model generation, do the sentence editing according to the predicted labels.
+- Calculate the #instances those have the same non-updated, and updated summary.
 
 ### TODO
 - Re-labeled the `summary`, drop the `top-k` discussions.
