@@ -111,6 +111,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ### TODO
 - Re-labeled the `summary`, drop the `top-k` discussions.
 - Calculate the #paragarphs between non-updated and updated version of summary.
+- We may have to drop the instances with high-similarity and low-similarity between non-updated and updated summaries.
 - Check if the last paragraph of summary is same as the last paragraph in train/test/val pt file.
 - Re-construct the dataset with summary revisions, the `util/` from `edit_data` may be still work.
 - Truncation is no longer needed.
