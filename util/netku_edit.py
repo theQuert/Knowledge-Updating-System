@@ -546,6 +546,7 @@ df_keep.to_csv('log_keep.csv', header=False, index=False)
 df_add.to_csv('log_add.csv', header=False, index=False)
 df_sub.to_csv('log_sub.csv', header=False, index=False)
 
+'''
 def Labeling(new):
     labeled_data = []
     for idx in range(len(new)):
@@ -562,15 +563,42 @@ def Labeling(new):
             # labeled_data.append(' [SUB] '+new[idx]['text']+' [/SUB]')
             labeled_data.append(' [SUB] '+new[idx]['text'])
     return ''.join(labeled_data)
+'''
+
+# old: [RM], [KEEP]
+# new: [SUB], [ADD]
+def Bidirectional_merge(old, new):
+    labeled_data = []
+    # len(old)==len(new)
+    for idx in range(len(new)):
+        if old[idx]['tag']==' ' and new[idx]['tag']!='':
+            # labeled_data.append(' [KEEP] ' + new[idx]['text'] + ' [/KEEP]')
+            labeled_data.append(' [KEEP] ' + old[idx]['text'])
+        elif old[idx]['tag']=='-' and new[idx]['tag']=='*':
+            labeled_data.append(' [RM] '+old[idx]['text'])
+            labeled_data.append(' [SUB] '+new[idx]['text'])
+        elif old[idx]['tag']=='-' and new[idx]['tag']=='+':
+            labeled_data.append(' [RM] '+old[idx]['text'])
+            labeled_data.append(' [ADD] '+new[idx]['text'])
+        elif old[idx]['tag']=='-' and new[idx]['tag']=='':
+            labeled_data.append(' [RM] '+old[idx]['text'])
+        elif new[idx]['tag']=='+' and new[idx]['text']!='': 
+            # labeled_data.append(' [ADD] '+new[idx]['text']+' [/ADD]')
+            labeled_data.append(' [ADD] '+new[idx]['text'])
+        # elif new[idx]['tag']=='*' and new[idx]['text']!='':
+        # else:
+        #     # labeled_data.append(' [SUB] '+new[idx]['text']+' [/SUB]')
+        #     labeled_data.append(' [SUB] '+new[idx]['text'])
+    return ''.join(labeled_data)
 
 labeled = []
 for idx in range(len(train_pt)):
-     labeled.append(Labeling(un_labeled[idx]))
+     labeled.append(Bidirectional_merge(un_labeled[idx]))
 
 wrap = []
 for idx in range(len(train_pt)):
     idx_content = {}
-    idx_content['content'] = labeled[idx].replace('.\n\n#####', '.\n\n')
+    idx_content['content'] = labeled[idx]
     wrap.append(idx_content)
 torch.save(wrap, './train_labeled.pt')
 
