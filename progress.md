@@ -105,6 +105,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Given an old summary and the news event trigger, the model will be capable of how to modify the src (add labels to sentence-level).
 - `src`: The un-labeled non-updated summary + news trigger event knowledge. `tgt`: **Labeled** updated summary.
 - Labeling Direction: `Updated version` -> `Non-updated version`, the direction is unchanged.
+- The `src` may have to merge with bi-directional diffs.
 - Obtain the model generation, do the sentence editing according to the predicted labels.
 - Calculate the #instances those have the same non-updated, and updated summary.
 
