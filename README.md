@@ -8,9 +8,9 @@
 - Run script to re-construcure the input data to maximum 10 paragraphs in each list from each cluster (WCEP10-like): `netku_edit_afttrunc.py`
 
 ## Source of our dataset
-[Data](https://drive.google.com/drive/folders/1xF05auIp1EMd_KMHEaEu48J9meOsZSrU?usp=sharing)
+#### [Data](https://drive.google.com/drive/folders/1xF05auIp1EMd_KMHEaEu48J9meOsZSrU?usp=sharing)
 
 ## References
-#### [Source Data: NetKu](https://github.com/hhhuang/NetKu)
+#### [A Multi-grained Dataset for News Event Triggered Knowledge Update](https://github.com/hhhuang/NetKu)
 #### [PRIMERA](https://github.com/allenai/PRIMER)
 #### [NewsEdits](https://github.com/isi-nlp/NewsEdits)
