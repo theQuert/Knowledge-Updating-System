@@ -9,11 +9,7 @@ import pycountry
 import pandas as pd
 import numpy as np
 
-train_pt = torch.load('../../NetKu/full_content/train.pt')
-# train_pt = torch.load('../../NetKu/full_content/check_cands.pt')
-# train_pt = torch.load('../../edit_NetKu/util/train_labeled.pt')
-
-
+pt_file = torch.load('../../NetKu/full_content/train.pt')
 # test_pt = torch.load('../../NetKu/full_content/test.pt')
 # val_pt = torch.load('../../NetKu/full_content/val.pt')
 
@@ -503,22 +499,24 @@ def get_sentence_diff(a_old, a_new, filter_common_sents=True, merge_clusters=Tru
     return vers_old, vers_new 
 
 def addMark(src):
-    input_docs = src.replace('\n\n', '\n\n#####')
+    input_docs = src.replace('\n\n', '#####')
     input_docs = input_docs.replace('[citation needed]', '')
     return input_docs
 
+'''
 def fixMark(src):
     # input_docs = src.replace('\n\n', '.\n\n')
     input_docs = src.replace('#####', '.\n\n')
     return input_docs
+'''
 
 # Main 
 
 keep, add, sub = [], [], []
 un_labeled = []
-for idx in range(len(train_pt)):
-    old_ver = addMark(train_pt[idx]['document'])
-    new_ver = addMark(train_pt[idx]['summary'])
+for idx in range(len(pt_file)):
+    old_ver = addMark(pt_file[idx]['document'])
+    new_ver = addMark(pt_file[idx]['summary'])
     old, new = get_sentence_diff(old_ver, new_ver)
     un_labeled.append(new)
     ke, ad, su = 0, 0, 0
@@ -571,7 +569,7 @@ def Bidirectional_merge(old, new):
     labeled_data = []
     # len(old)==len(new)
     for idx in range(len(new)):
-        if old[idx]['tag']==' ' and new[idx]['tag']!='':
+        if old[idx]['tag']==' ' and new[idx]['tag']==' ':
             # labeled_data.append(' [KEEP] ' + new[idx]['text'] + ' [/KEEP]')
             labeled_data.append(' [KEEP] ' + old[idx]['text'])
         elif old[idx]['tag']=='-' and new[idx]['tag']=='*':
@@ -582,21 +580,22 @@ def Bidirectional_merge(old, new):
             labeled_data.append(' [ADD] '+new[idx]['text'])
         elif old[idx]['tag']=='-' and new[idx]['tag']=='':
             labeled_data.append(' [RM] '+old[idx]['text'])
-        elif new[idx]['tag']=='+' and new[idx]['text']!='': 
+        elif new[idx]['tag']=='+' and new[idx]['text']!='':
             # labeled_data.append(' [ADD] '+new[idx]['text']+' [/ADD]')
             labeled_data.append(' [ADD] '+new[idx]['text'])
         # elif new[idx]['tag']=='*' and new[idx]['text']!='':
         # else:
         #     # labeled_data.append(' [SUB] '+new[idx]['text']+' [/SUB]')
         #     labeled_data.append(' [SUB] '+new[idx]['text'])
-    return ''.join(labeled_data)
+    return ''.join(labeled_data).strip()
+
 
 labeled = []
-for idx in range(len(train_pt)):
+for idx in range(len(pt_file)):
      labeled.append(Bidirectional_merge(un_labeled[idx]))
 
 wrap = []
-for idx in range(len(train_pt)):
+for idx in range(len(pt_file)):
     idx_content = {}
     idx_content['content'] = labeled[idx]
     wrap.append(idx_content)
