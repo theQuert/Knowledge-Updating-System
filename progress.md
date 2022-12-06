@@ -110,10 +110,10 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Calculate the #instances those have the same non-updated, and updated summary.
 
 ### TODO
-- Re-labeled the `summary`, drop the `top-k` discussions.
-- Calculate the #paragarphs between non-updated and updated version of summary.
+- Re-labeled the `summary`, drop the `top-k` discussions. (DONE)
+- Calculate the #paragarphs between non-updated and updated version of summary. (Dropped)
 - We may have to drop the instances with high-similarity and low-similarity between non-updated and updated summaries.
-- Check if the last paragraph of summary is same as the last paragraph in train/test/val pt file.
+- Check if the last paragraph of summary is same as the last paragraph in train/test/val pt file. (DONE)
 - Re-construct the dataset with summary revisions, the `util/` from `edit_data` may be still work.
 - Truncation is no longer needed.
 - Check the baseline after the new dataset is constructed.
