@@ -123,3 +123,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Bi-directional sentence labeling is done.
 - High similarity between non-updated and updated summaries.
 - If update part of the full-content, we may have to find a rule to check which paragraphs are needed to be updated.
+
+### TODO
+- Although the raio of `SequenceMatcher` is high, still have to check the `ROUGE-L` in our summaries (without trigger).
+- Calculate the labels ([RM], [ADD], [SUB]) from our labeled train set.
+- If problems occur, we may have to have more reseaerch on finding the paragraphs those needed to be udpated.
