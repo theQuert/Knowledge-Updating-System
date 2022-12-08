@@ -117,3 +117,9 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Re-construct the dataset with summary revisions, the `util/` from `edit_data` may be still work.
 - Truncation is no longer needed.
 - Check the baseline after the new dataset is constructed.
+
+## 2022/12/07-2022/12/14
+### Discussions
+- Bi-directional sentence labeling is done.
+- High similarity between non-updated and updated summaries.
+- If update part of the full-content, we may have to find a rule to check which paragraphs are needed to be updated.
