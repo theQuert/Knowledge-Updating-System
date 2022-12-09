@@ -125,6 +125,11 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - If update part of the full-content, we may have to find a rule to check which paragraphs are needed to be updated.
 
 ### TODO
+- The clean data is updated. (DONE)
+- The `ROUGE`, `Bert-Score` calculation on train set without trigger existed is running. (summary-level)
+- Re-build the pt file for train set without trigger (we already have the `src` and `tgt` in local) 
+- Upload the local `src` and `tgt` to VM. Then, construct the upated pt file and do sentence-labeling.
+- After labeling, calculate the #RM, #ADD, #SUB.
 - Although the raio of `SequenceMatcher` is high, still have to check the `ROUGE-L` in our summaries (without trigger).
 - Calculate the labels ([RM], [ADD], [SUB]) from our labeled train set.
 - If problems occur, we may have to have more reseaerch on finding the paragraphs those needed to be udpated.
