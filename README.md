@@ -10,6 +10,9 @@
 ## Source of our dataset
 #### [Data](https://drive.google.com/drive/folders/1xF05auIp1EMd_KMHEaEu48J9meOsZSrU?usp=sharing)
 
+## Bi-directional Sentence Labeling
+![bidirectional_labeling](https://raw.githubusercontent.com/theQuert/NetKu_Processing/main/bi_labeling.png)
+
 ## References
 #### [A Multi-grained Dataset for News Event Triggered Knowledge Update](https://github.com/hhhuang/NetKu)
 #### [PRIMERA](https://github.com/allenai/PRIMER)
