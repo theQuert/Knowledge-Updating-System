@@ -9,9 +9,12 @@ import pycountry
 import pandas as pd
 import numpy as np
 
-pt_file = torch.load('../../NetKu/full_content/train.pt')
+# pt_file = torch.load('../../NetKu/full_content/train.pt')
 # test_pt = torch.load('../../NetKu/full_content/test.pt')
 # val_pt = torch.load('../../NetKu/full_content/val.pt')
+train_pt = torch.load('/home/quert/edit_NetKu/util/summary/train_examine/train_without_trigger.pt')
+# test_pt = torch.load('/home/quert/edit_NetKu/NetKu/summary/test.pt')
+# val_pt = torch.load('/home/quert/edit_NetKu/NetKu/summary/val.pt')
 
 spacy_package = 'en_core_web_sm'
 nlp_ner = None
@@ -265,24 +268,27 @@ def get_list_diff(l_old, l_new):
 
 
         elif label == '+':
-            old_text, new_text = diffs[idx-2][2:], diffs[idx][2:]
-            sents_ratio = get_word_diff_ratio(old_text, new_text) 
-            
-            if sents_ratio >= .8:
-                vars_new.append({
-                    'text': new_text,
-                    'tag': ' '
-                })
-            elif sents_ratio < .3:
-                vars_new.append({
-                    'text': new_text,
-                    'tag': '+'
-                })
-            else:
-                vars_new.append({
-                    'text': new_text,
-                    'tag': '*'
-                })
+            try:
+                old_text, new_text = diffs[idx-2][2:], diffs[idx][2:]
+                sents_ratio = get_word_diff_ratio(old_text, new_text) 
+                
+                if sents_ratio >= .8:
+                    vars_new.append({
+                        'text': new_text,
+                        'tag': ' '
+                    })
+                elif sents_ratio < .3:
+                    vars_new.append({
+                        'text': new_text,
+                        'tag': '+'
+                    })
+                else:
+                    vars_new.append({
+                        'text': new_text,
+                        'tag': '*'
+                    })
+            except:
+                pass
             # if in_question:
             #     in_question = False
             # else:
@@ -503,6 +509,7 @@ def addMark(src):
     input_docs = input_docs.replace('[citation needed]', '')
     return input_docs
 
+
 '''
 def fixMark(src):
     # input_docs = src.replace('\n\n', '.\n\n')
@@ -510,15 +517,49 @@ def fixMark(src):
     return input_docs
 '''
 
+
+# old: [RM], [KEEP]
+# new: [SUB], [ADD]
+def Bidirectional_merge(old, new):
+    labeled_data = []
+    # len(old)==len(new)
+    for idx in range(len(old)):
+        if old[idx]['tag']==' ' and new[idx]['tag']==' ':
+            # labeled_data.append(' [KEEP] ' + new[idx]['text'] + ' [/KEEP]')
+            labeled_data.append(' [KEEP] ' + old[idx]['text'])
+        elif old[idx]['tag']=='-' and new[idx]['tag']=='*':
+            labeled_data.append(' [RM] '+old[idx]['text'])
+            labeled_data.append(' [SUB] '+new[idx]['text'])
+        elif old[idx]['tag']=='-' and new[idx]['tag']=='+':
+            labeled_data.append(' [RM] '+old[idx]['text'])
+            labeled_data.append(' [ADD] '+new[idx]['text'])
+        elif old[idx]['tag']=='-' and new[idx]['tag']=='':
+            labeled_data.append(' [RM] '+old[idx]['text'])
+        elif new[idx]['tag']=='+' and new[idx]['text']!='':
+            # labeled_data.append(' [ADD] '+new[idx]['text']+' [/ADD]')
+            labeled_data.append(' [ADD] '+new[idx]['text'])
+        # elif new[idx]['tag']=='*' and new[idx]['text']!='':
+        # else:
+        #     # labeled_data.append(' [SUB] '+new[idx]['text']+' [/SUB]')
+        #     labeled_data.append(' [SUB] '+new[idx]['text'])
+    return ''.join(labeled_data).strip()
+
 # Main 
 
 keep, add, sub = [], [], []
-un_labeled = []
+unlabeled_docs = []
+unlabeled_summ = []
+pt_file = train_pt 
+
 for idx in range(len(pt_file)):
     old_ver = addMark(pt_file[idx]['document'])
     new_ver = addMark(pt_file[idx]['summary'])
     old, new = get_sentence_diff(old_ver, new_ver)
-    un_labeled.append(new)
+    unlabeled_docs.append(old)
+    unlabeled_summ.append(new)
+
+
+'''
     ke, ad, su = 0, 0, 0
     for i in range(len(new)):
         if new[i]['tag']==' ': ke+=1
@@ -543,6 +584,8 @@ df_sub = pd.DataFrame(sub)
 df_keep.to_csv('log_keep.csv', header=False, index=False)
 df_add.to_csv('log_add.csv', header=False, index=False)
 df_sub.to_csv('log_sub.csv', header=False, index=False)
+'''
+
 
 '''
 def Labeling(new):
@@ -563,41 +606,23 @@ def Labeling(new):
     return ''.join(labeled_data)
 '''
 
-# old: [RM], [KEEP]
-# new: [SUB], [ADD]
-def Bidirectional_merge(old, new):
-    labeled_data = []
-    # len(old)==len(new)
-    for idx in range(len(new)):
-        if old[idx]['tag']==' ' and new[idx]['tag']==' ':
-            # labeled_data.append(' [KEEP] ' + new[idx]['text'] + ' [/KEEP]')
-            labeled_data.append(' [KEEP] ' + old[idx]['text'])
-        elif old[idx]['tag']=='-' and new[idx]['tag']=='*':
-            labeled_data.append(' [RM] '+old[idx]['text'])
-            labeled_data.append(' [SUB] '+new[idx]['text'])
-        elif old[idx]['tag']=='-' and new[idx]['tag']=='+':
-            labeled_data.append(' [RM] '+old[idx]['text'])
-            labeled_data.append(' [ADD] '+new[idx]['text'])
-        elif old[idx]['tag']=='-' and new[idx]['tag']=='':
-            labeled_data.append(' [RM] '+old[idx]['text'])
-        elif new[idx]['tag']=='+' and new[idx]['text']!='':
-            # labeled_data.append(' [ADD] '+new[idx]['text']+' [/ADD]')
-            labeled_data.append(' [ADD] '+new[idx]['text'])
-        # elif new[idx]['tag']=='*' and new[idx]['text']!='':
-        # else:
-        #     # labeled_data.append(' [SUB] '+new[idx]['text']+' [/SUB]')
-        #     labeled_data.append(' [SUB] '+new[idx]['text'])
-    return ''.join(labeled_data).strip()
-
 
 labeled = []
-for idx in range(len(pt_file)):
-     labeled.append(Bidirectional_merge(un_labeled[idx]))
+error_ids = []
+# for idx in range(len(pt_file)):
+for idx in range(len(unlabeled_docs)):
+    try:
+        labeled.append(Bidirectional_merge(unlabeled_docs[idx], unlabeled_summ[idx]))
+    except:
+       error_ids.append(idx) 
+       pass
 
 wrap = []
-for idx in range(len(pt_file)):
+for idx in range(len(labeled)):
     idx_content = {}
     idx_content['content'] = labeled[idx]
     wrap.append(idx_content)
-torch.save(wrap, './train_labeled.pt')
+torch.save(wrap, './train_labeled_without_trigger.pt')
+error_df = pd.DataFrame({'error_idx': error_ids}).to_csv('./error_df.csv')
+
 
