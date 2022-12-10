@@ -130,5 +130,5 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - The `ROUGE`, `Bert-Score` calculation on train set without trigger existed is done. (summary-level)
 - Re-build the pt file for train set without trigger (we already have the `src` and `tgt` in local) (Done)
 - Upload the local `src` and `tgt` to VM. Then, construct the upated pt file and do sentence-labeling. (Done)
-- After labeling, calculate the sum of #RM, #ADD, #SUB. (Calculate the averaged edit-actions) (Running)
-- If problems occur, we may have to have more reseaerch on finding the paragraphs those needed to be udpated.
+- After labeling, calculate the sum of #RM, #ADD, #SUB. (Calculate the averaged edit-actions) (Done)
+- If problems occur, we may have to have more reseaerch on finding the paragraphs those needed to be udpated. (Running)
