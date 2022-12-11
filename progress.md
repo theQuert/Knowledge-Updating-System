@@ -132,3 +132,18 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Upload the local `src` and `tgt` to VM. Then, construct the upated pt file and do sentence-labeling. (Done)
 - After labeling, calculate the sum of #RM, #ADD, #SUB. (Calculate the averaged edit-actions) (Done)
 - If problems occur, we may have to have more reseaerch on finding the paragraphs those needed to be udpated. (Running)
+- Re-label the train set (bs3) after truncating the input length into `4096`. `util/edit_data.py`.
+- Post text-cleaning after labeling (truncation, calculate the #edits). 
+
+
+## 2022/12/14-2022/12/21
+### Discussions
+- Since the sequence similarity and ROUGE between non-updated and updated summaries is high, we may have to focus on updating partial article.
+- Two Papers: `EditEvel`, `Attention Temperature Matters in Abstractive Summarization Distillation`
+- Construct the relationship between paragraphs.
+- Find the core paragraph when trigger occurs (Tree, ROUGE)?
+
+### TODO
+- Re-label the train set (bs3) after truncating the input length into `4096`. `util/edit_data.py`.
+- Post text-cleaning after labeling (truncation, calculate the #edits). 
+
