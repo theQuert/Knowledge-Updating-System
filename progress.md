@@ -144,6 +144,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Find the core paragraph when trigger occurs (Tree, ROUGE)?
 
 ### TODO
+- Check the details of data collection.
 - Re-label the train set (bs3) after truncating the input length into `4096`. `util/edit_data.py`.
 - Post text-cleaning after labeling (truncation, calculate the #edits). 
+- Find papers those are "paragraphs relation related".
 
