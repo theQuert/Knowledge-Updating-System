@@ -19,3 +19,8 @@
 #### [A Multi-grained Dataset for News Event Triggered Knowledge Update](https://github.com/hhhuang/NetKu)
 #### [PRIMERA](https://github.com/allenai/PRIMER)
 #### [NewsEdits](https://github.com/isi-nlp/NewsEdits)
+#### [Updated Headline Generation: Creating Updated Summaries for Evolving News Stories](https://aclanthology.org/2022.acl-long.446)
+#### [DYLE: Dynamic Latent Extraction for Abstractive Long-Input Summarization](https://ui.adsabs.harvard.edu/abs/2021arXiv211008168M)
+#### [EditEval: An Instruction-Based Benchmark for Text Improvements](https://ui.adsabs.harvard.edu/abs/2022arXiv220913331D)
+#### [Attention Temperature Matters in Abstractive Summarization Distillation](https://ui.adsabs.harvard.edu/abs/2021arXiv210603441Z)
+#### [Graph-to-Text Generation with Dynamic Structure Pruning](https://ui.adsabs.harvard.edu/abs/2022arXiv220907258L)
