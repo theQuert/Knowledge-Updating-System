@@ -100,6 +100,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Our fine-tuned model may only performs well on our NetKu dataset.
 - Maybe a method to find the paragraphs which needed to be updated is still important without the updated content.
 
+
 ## 2022/11/30-2022/12/07
 ### Change the main idea to summary generation
 - Given an old summary and the news event trigger, the model will be capable of how to modify the src (add labels to sentence-level).
@@ -117,6 +118,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Re-construct the dataset with summary revisions, the `util/` from `edit_data` may be still work.
 - Truncation is no longer needed.
 - Check the baseline after the new dataset is constructed.
+
 
 ## 2022/12/07-2022/12/14
 ### Discussions
@@ -141,11 +143,13 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Since the sequence similarity and ROUGE between non-updated and updated summaries is high, we may have to focus on updating partial article.
 - Two Papers: `EditEvel`, `Attention Temperature Matters in Abstractive Summarization Distillation`
 - Construct the relationship between paragraphs.
-- Find the core paragraph when trigger occurs (Tree, ROUGE)?
+- Find the core paragraphs when trigger occurs (Tree, ROUGE)?
 
 ### TODO
+- Check the #paragraph splitted with '\n\n' and '\\c\\c' (Done)
 - Check the details of data collection.
-- Re-label the train set (bs3) after truncating the input length into `4096`. `util/edit_data.py`.
+- Re-label the train set (bs3) after truncating the input length into `4096`. `util/edit_data.py`. (Running)
 - Post text-cleaning after labeling (truncation, calculate the #edits). 
-- Find papers those are "paragraphs relation related".
+- Truncate after labeling.
+- Find "paragraphs relation related" papers.
 

@@ -1,4 +1,4 @@
-# News Event Triggered Knowledge Update  
+# News Event Triggered Knowledge Update Generation
 
 ## Processing 
 - Run sentence-level difference encoding with `netku_edit.py`
