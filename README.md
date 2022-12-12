@@ -13,6 +13,8 @@
 ## Bi-directional Sentence Labeling
 ![bidirectional_labeling](https://raw.githubusercontent.com/theQuert/NetKu_Processing/main/bi_labeling.png)
 
+## Slides
+[Google Slides](https://docs.google.com/presentation/d/1Wku83ckWwYP26hAqMmsWmURScCrNR5B7aWaKZAYEspg/edit?usp=sharing)
 ## References
 #### [A Multi-grained Dataset for News Event Triggered Knowledge Update](https://github.com/hhhuang/NetKu)
 #### [PRIMERA](https://github.com/allenai/PRIMER)
