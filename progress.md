@@ -141,7 +141,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ## 2022/12/14-2022/12/21
 ### Discussions
 - Since the sequence similarity and ROUGE between non-updated and updated summaries is high, we may have to focus on updating partial article.
-- Papers: `EditEvel`, `Attention Temperature Matters in Abstractive Summarization Distillation`, `Graph-to-Text Generation with Dynamic Structure Pruning`
+- Papers: `EditEvel`, `Attention Temperature Matters in Abstractive Summarization Distillation`, `Leveraging Locality in Abstractive Text Summarization`
 - Construct the relationship between paragraphs.
 - Find the core paragraphs when trigger occurs (Tree, ROUGE)?
 
