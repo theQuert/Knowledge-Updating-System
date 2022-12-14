@@ -148,8 +148,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ### TODO
 - Check the #paragraph splitted with '\n\n' and '\\c\\c' (Done)
 - Check the details of data collection.
-- Re-label the train set (bs3) after truncating the input length into `4096`. `util/edit_data.py`. (Running)
-- Post text-cleaning after labeling (truncation, calculate the #edits). 
+- Truncate the train set (bs3) after labeling. `util/edit_data.py`. (Done)
+- Post text-cleaning after labeling (truncation, calculate the #edits). (Running)
 - Find "paragraphs relation related" papers.
 - Survey the BartGraphSum paper and the cited papers.
 - Find more reference papers from ACL2022, EMNLP2022, NAACL2022.
