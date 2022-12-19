@@ -155,4 +155,4 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Find more reference papers from ACL2022, EMNLP2022, NAACL2022.
 - Pretrain: BART encode + softmax (Inputs: trigger + section name + summary), (Outputs: 0/1, means edit or not )
 - Generation: Given the trigger representaiton and the old section contents, output the generated summaries.
-
+- Extract the triggers, find the section name, and define the edition threshold for each section.
