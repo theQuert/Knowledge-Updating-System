@@ -149,10 +149,11 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Check the #paragraph splitted with '\n\n' and '\\c\\c' (Done)
 - Check the details of data collection.
 - Truncate the train set (bs3) after labeling. `util/edit_data.py`. (Done)
-- Post text-cleaning after labeling (truncation, calculate the #edits). (Running)
-- Find "paragraphs relation related" papers.
-- Survey the BartGraphSum paper and the the citation papers.
-- Find more reference papers from ACL2022, EMNLP2022, NAACL2022.
-- Pretrain: BART encode + softmax (Inputs: trigger + section name + summary), (Outputs: 0/1, means edit or not )
+- Post text-cleaning after labeling (truncation, calculate the #edits). (Done)
+- Find "paragraphs relation related" papers.(Doing)
+- Survey the BartGraphSum paper and the the citation papers. (Doing)
+- Find more reference papers from ACL2022, EMNLP2022, NAACL2022. (Doing)
+- Pretrain: BART encoder + softmax (Inputs: trigger + section name + summary), (Outputs: 0/1, means edit or not )
 - Generation: Given the trigger representaiton and the old section contents, output the generated summaries.
 - Extract the triggers, find the section name, and define the edition threshold for each section.
+- If we don't have the section name, may have to generate the names with GPT.
