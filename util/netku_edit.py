@@ -9,10 +9,8 @@ import pycountry
 import pandas as pd
 import numpy as np
 
-# pt_file = torch.load('../../NetKu/full_content/train.pt')
-# test_pt = torch.load('../../NetKu/full_content/test.pt')
-# val_pt = torch.load('../../NetKu/full_content/val.pt')
-train_pt = torch.load('/home/quert/edit_NetKu/util/summary/train_examine/train_without_trigger.pt')
+pt_file = torch.load('/home/quert/edit_NetKu/NetKu/full_content/train.pt')
+# pt_file = torch.load('./eva_par.pt')
 # test_pt = torch.load('/home/quert/edit_NetKu/NetKu/summary/test.pt')
 # val_pt = torch.load('/home/quert/edit_NetKu/NetKu/summary/val.pt')
 
@@ -148,8 +146,8 @@ def filter_lines(a):
     if isinstance(a, list):
         pars = a
     else:
-        # pars = a.split('</p>')
-        pars = a.split('\n\n')
+        pars = a.split('</p>')
+        # pars = a.split(". \n\n")
     output = []
     for p in pars:
         if not any(map(lambda x: x in p.lower(), to_filter)):
@@ -157,7 +155,8 @@ def filter_lines(a):
     if isinstance(a, list):
         return output
     else:
-        return '\n\n'.join(output)
+        # return ". \n\n".join(output)
+        return "</p>".join(output)
 
 def is_dateline(x):
     ## is short enough
@@ -203,9 +202,10 @@ def split_sents(a, perform_filter=True):
             break
 
     # get sentences from each paragraph
-    # pars = a.split('.\n\n')
+    # pars = a.split('\\c\\c')
     # get pars, then read the sentences from each par
-    pars = a.split('.\n\n')
+    # pars = a.split('. \n\n')
+    pars = a.split("</p><p>")
     for p in pars:
         doc = nlp(p)
         sents = list(map(lambda x: x.text, doc.sents))
@@ -223,7 +223,8 @@ def split_sents(a, perform_filter=True):
     if len(output_sents) > 0:
         if is_dateline(output_sents[0]):
             output_sents = ['—'.join(output_sents[:2])] + output_sents[2:]
-    # output_sents = '.\n\n'.join(output_sents)
+    # output_sents = '\\c\\c'.join(output_sents)
+    # output_sents = '\n\n'.join(output_sents)
     return output_sents
 
 def get_word_diff_ratio(s_old, s_new):
@@ -505,17 +506,15 @@ def get_sentence_diff(a_old, a_new, filter_common_sents=True, merge_clusters=Tru
     return vers_old, vers_new 
 
 def addMark(src):
-    input_docs = src.replace('\n\n', '#####')
+    input_docs = src.replace('. \n\n', '#####')
     input_docs = input_docs.replace('[citation needed]', '')
     return input_docs
 
 
-'''
 def fixMark(src):
-    # input_docs = src.replace('\n\n', '.\n\n')
-    input_docs = src.replace('#####', '.\n\n')
+    # input_docs = src.replace('\\c\\c', '\\c\\c')
+    input_docs = src.replace('#####', '. \n\n')
     return input_docs
-'''
 
 
 # old: [RM], [KEEP]
@@ -549,11 +548,10 @@ def Bidirectional_merge(old, new):
 keep, add, sub = [], [], []
 unlabeled_docs = []
 unlabeled_summ = []
-pt_file = train_pt 
 
 for idx in range(len(pt_file)):
-    old_ver = addMark(pt_file[idx]['document'])
-    new_ver = addMark(pt_file[idx]['summary'])
+    old_ver = pt_file[idx]['document']
+    new_ver = pt_file[idx]['summary']
     old, new = get_sentence_diff(old_ver, new_ver)
     unlabeled_docs.append(old)
     unlabeled_summ.append(new)
@@ -609,7 +607,6 @@ def Labeling(new):
 
 labeled = []
 error_ids = []
-# for idx in range(len(pt_file)):
 for idx in range(len(unlabeled_docs)):
     try:
         labeled.append(Bidirectional_merge(unlabeled_docs[idx], unlabeled_summ[idx]))
@@ -620,9 +617,8 @@ for idx in range(len(unlabeled_docs)):
 wrap = []
 for idx in range(len(labeled)):
     idx_content = {}
-    idx_content['content'] = labeled[idx]
+    idx_content['document'] = pt_file[idx]['document']
+    idx_content['summary'] = labeled[idx].replace("[KEEP] \\c\\c", "\\c\\c [KEEP] ").replace("[ADD] \\c\\c", "\\c\\c [ADD] ").replace("[RM] \\c\\c", "\\c\\c [RM] ").replace("[SUB] \\c\\c", "\\c\\c [SUB] ")
     wrap.append(idx_content)
-torch.save(wrap, './train_labeled_without_trigger.pt')
+torch.save(wrap, './train_labeled.pt')
 error_df = pd.DataFrame({'error_idx': error_ids}).to_csv('./error_df.csv')
-
-
