@@ -1,7 +1,10 @@
 # News Event Triggered Knowledge Update Generation
 
-## Processing 
-- Run sentence-level difference encoding with `netku_edit.py`
+## Preprocessing 
+- Run sentence-level difference labeling with `netku_edit.py`
+
+## Model
+- Under `util/`.
 
 ## Source of our dataset
 [Data](https://github.com/hhhuang/NetKu)
@@ -9,7 +12,7 @@
 ## Modified Dataset to fit our task
 [Data](https://drive.google.com/drive/folders/1fMz10Dts2pxFp0Hz_-EVYoBJEEZERGsL?usp=sharing)
 
-## Bi-directional Sentence Labeling
+## Bidirectional Sentence Labeling
 ![bidirectional_labeling](https://raw.githubusercontent.com/theQuert/NetKu_Processing/main/bi_labeling.png)
 
 ## Slides
