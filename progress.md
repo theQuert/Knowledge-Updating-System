@@ -162,7 +162,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - If we don't have the section name, may have to generate the names with GPT.
 
 ## 2022/12/21-2022/12/28
-- Re-extract the docs and summaries with the raw data.
-- Do not filter the duplicated sentences.
-- Extract the section name from html data.
+- Re-extract the docs and summaries with the raw data. (Running)
+- Html parser for section name.
+- Do not filter the duplicated sentences. (Done)
 - Re-labeling the sentences.
+
