@@ -163,7 +163,13 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 
 ## 2022/12/21-2022/12/28
 - Re-extract the docs and summaries with the raw data. (Running)
-- Html parser for section name.
+    - Replace "[citation needed]" with ""
+    - Extract the section names of each instance (Done)
+    - Align section names to each paragraph (Running)
+        - Remove summaries from each full-contnent
+        - Align the rest paragraphs
+        - Add summaries back to full-content with section name `summary`
+- Html parser for section name. (Running)
 - Do not filter the duplicated sentences. (Done)
 - Re-labeling the sentences.
 
