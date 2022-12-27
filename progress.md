@@ -162,14 +162,15 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - If we don't have the section name, may have to generate the names with GPT.
 
 ## 2022/12/21-2022/12/28
+- Do not filter the duplicated sentences. (Done)
 - Re-extract the docs and summaries with the raw data. (Running)
-    - Replace "[citation needed]" with ""
     - Extract the section names of each instance (Done)
     - Align section names to each paragraph (Running)
         - Remove summaries from each full-contnent
-        - Align the rest paragraphs
-        - Add summaries back to full-content with section name `summary`
-- Html parser for section name. (Running)
-- Do not filter the duplicated sentences. (Done)
+        - Align the rest paragraphs to sections
+            - Extract section names except "See also", "References" (Done) 
+            - Extract and count the numbers of paragraphs under each section (Done)
+            - Align the "Section name" + "Number of paragraphs" (Done)
+        - Add summaries back to full-content with section name `summary` (Running)
 - Re-labeling the sentences.
 
