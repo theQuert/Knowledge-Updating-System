@@ -165,6 +165,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Do not filter the duplicated sentences. (Done)
 - Re-extract the docs and summaries with the raw data. (Running)
     - Extract the section names of each instance (Done)
+    - Extract the texts exclude `summary` from instances, for section-pairing. (Running)
     - Align section names to each paragraph (Running)
         - Remove summaries from each full-contnent
         - Align the rest paragraphs to sections
