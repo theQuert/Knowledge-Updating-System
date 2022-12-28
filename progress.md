@@ -174,6 +174,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
             - Align the "Section name" + "Number of paragraphs" (Done)
         - Add summaries back to full-content with section name `summary` (Running-3)
     - The counts of paragraphs from each section is based on counting only "Contents", no summaries involved. But, total #paragraphs from sections equals to total #paragraphs of contents with summary included. index0 (Running-2)
-    - If the contents include <li>, the "non_update_all_paragraph" counts, but our program doesn"t count. (Running-1)
+    - If the contents include <li>, the "non_update_all_paragraph" counts, but our program doesn"t count. (Done)
+    - In some instances, "See also." may not exist. We have to find another method to define the end_idx. (Running-1)
 - Re-labeling the sentences.
 
