@@ -177,5 +177,6 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
     - If the contents include <li>, the "non_update_all_paragraph" counts, but our program doesn"t count. (Done)
     - In some instances, "See also." may not exist. We have to find another method to define the end_idx. (Running-1)
     - Run unit tests, and fix the big block.
+    - Concate the main section name with sub-section name.
 - Re-labeling the sentences.
 
