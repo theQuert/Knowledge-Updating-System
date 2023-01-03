@@ -178,7 +178,9 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
     - In some instances, "See also." may not exist. We have to find another method to define the end_idx. (Done) 
     - Concate the main section name and its sub-section. (Running)
     - Define the column names of csv. (Running)
-    - Run unit tests, and fix the big block.
-    - Concate the main section name with sub-section name.
+    - Run unit tests, and fix the big block. (Done)
+    - Concate the main section name with sub-section name. (Done)
+    - The #paragraphs between non-updated and updated are not same, it's hard to align the section/sub-section with paragraphs.
+        - New to Old or Old-to-New, but bidirectional may be optimal.
 - Re-labeling the sentences.
 
