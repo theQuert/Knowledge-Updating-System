@@ -166,6 +166,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Re-extract the docs and summaries with the raw data. (Running)
     - Extract the section names of each instance (Done)
     - Extract the texts exclude `summary` from instances, for section-pairing. (Running)
+
+## 2022/12/28-2023/01/04
     - Align section names to each paragraph (Running)
         - Remove summaries from each full-contnent
         - Align the rest paragraphs to sections
@@ -184,3 +186,4 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
         - New to Old or Old-to-New, but bidirectional may be optimal.
 - Re-labeling the sentences.
 
+## 2023/01/04-2023/01/11
