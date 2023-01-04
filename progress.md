@@ -168,22 +168,22 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
     - Extract the texts exclude `summary` from instances, for section-pairing. (Running)
 
 ## 2022/12/28-2023/01/04
-    - Align section names to each paragraph (Running)
-        - Remove summaries from each full-contnent
-        - Align the rest paragraphs to sections
-            - Extract section names except "See also", "References" (Done) 
-            - Extract and count the numbers of paragraphs under each section (Done)
-            - Align the "Section name" + "Number of paragraphs" (Done)
-        - Add summaries back to full-content with section name `summary` (Running-3)
-    - The counts of paragraphs from each section is based on counting only "Contents", no summaries involved. But, total #paragraphs from sections equals to total #paragraphs of contents with summary included. index0 (Running-2)
-    - If the contents include <li>, the "non_update_all_paragraph" counts, but our program doesn"t count. (Done)
-    - In some instances, "See also." may not exist. We have to find another method to define the end_idx. (Done) 
-    - Concate the main section name and its sub-section. (Running)
-    - Define the column names of csv. (Running)
-    - Run unit tests, and fix the big block. (Done)
-    - Concate the main section name with sub-section name. (Done)
-    - The #paragraphs between non-updated and updated are not same, it's hard to align the section/sub-section with paragraphs.
-        - New to Old or Old-to-New, but bidirectional may be optimal.
+- Align section names to each paragraph (Running)
+    - Remove summaries from each full-contnent
+    - Align the rest paragraphs to sections
+        - Extract section names except "See also", "References" (Done) 
+        - Extract and count the numbers of paragraphs under each section (Done)
+        - Align the "Section name" + "Number of paragraphs" (Done)
+    - Add summaries back to full-content with section name `summary` (Running-3)
+- The counts of paragraphs from each section is based on counting only "Contents", no summaries involved. But, total #paragraphs from sections equals to total #paragraphs of contents with summary included. index0 (Running-2)
+- If the contents include <li>, the "non_update_all_paragraph" counts, but our program doesn"t count. (Done)
+- In some instances, "See also." may not exist. We have to find another method to define the end_idx. (Done) 
+- Concate the main section name and its sub-section. (Running)
+- Define the column names of csv. (Running)
+- Run unit tests, and fix the big block. (Done)
+- Concate the main section name with sub-section name. (Done)
+- The #paragraphs between non-updated and updated are not same, it's hard to align the section/sub-section with paragraphs.
+    - New to Old or Old-to-New, but bidirectional may be optimal.
 - Re-labeling the sentences.
 
 ## 2023/01/04-2023/01/11
