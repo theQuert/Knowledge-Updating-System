@@ -187,3 +187,14 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Re-labeling the sentences.
 
 ## 2023/01/04-2023/01/11
+- We meet the problems on hard to align the labeled data to respective section/subsection.
+    - Construct the hash map to store the #paragraphs under each section/subsection.
+    - Merge the section/subsection from non-updated and updated version.
+    - The hash map store the larger #paragraphs of each section between non-updated and updated articles.
+- Merge the sections:
+    - Some sections are no longer existed in new version. (Not confirmed yet)
+    - Some sections are added in new version.(Not confirmed yet)
+    - #instances with different sections between non-updated and updated articles is 1361/1602 in train set, 174/201 in test set.
+    - We may apply section name from updated articles, and remove the paragraphs with [RM] after labeling.
+- Sentence labeling: remain bidirectional labeling.
+- Then, running our later steps: Paragraphs labeling -> train BART encoder.
