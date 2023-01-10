@@ -198,3 +198,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
     - We may apply section name from updated articles, and remove the paragraphs with [RM] after labeling.
 - Sentence labeling: remain bidirectional labeling.
 - Then, running our later steps: Paragraphs labeling -> train BART encoder.
+
+## 2023/01/11-2023/01/18
+- We have `1361/1602` instances have same #sections, `1334/1602` instances have same sections, `911` instances with same sections and #paragraphs.
+    - Extract the `1334` instances, do sentence-labeling and paragraph-labeling.
+- 
