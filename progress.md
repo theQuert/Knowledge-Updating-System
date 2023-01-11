@@ -200,6 +200,15 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Then, running our later steps: Paragraphs labeling -> train BART encoder.
 
 ## 2023/01/11-2023/01/18
-- We have `1361/1602` instances have same #sections, `1334/1602` instances have same sections, `911` instances with same sections and #paragraphs.
-    - Extract the `1334` instances, do sentence-labeling and paragraph-labeling.
-- 
+### See the instances with same sections
+- Train set: We have `1334/1602` instances have same sections (names), `911` instances with same section names and #paragraphs.
+    - Train set: Extract the `1334` instances, do sentence-labeling and paragraph-labeling. (Running)
+    - Train set: Prepare tmp baselines. (Running)
+    - Train set: Extract triggers from `1334` instances. (Done)
+    - Train set: Extract the updated version of section-#paragraphs pairs (csv format).
+        - Problems: Updated #paragraphs cannot capture both added and removed paragraphs.
+        - Solution: Each paragraph should be labeled with corresponded section name at tail.
+- Test set: We have `168/201` instances have same sections (names), `168` instances with same sections and #paragraphs.
+    - Test set: Extract triggers from `168` instances. (Done)
+- Val set: We have `152/192` instances have same sections (names), `152` instances with same sections and #paragraphs.
+    - Val set: Extract triggers from `152` instances. (Done)
