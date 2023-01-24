@@ -208,7 +208,17 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
     - Train set: Extract the updated version of section-#paragraphs pairs (csv format).
         - Problems: Updated #paragraphs cannot capture both added and removed paragraphs.
         - Solution: Each paragraph should be labeled with corresponded section name at tail.
+        - The solution may fix the different sections problems? (Thinking)
 - Test set: We have `168/201` instances have same sections (names), `168` instances with same sections and #paragraphs.
     - Test set: Extract triggers from `168` instances. (Done)
 - Val set: We have `152/192` instances have same sections (names), `152` instances with same sections and #paragraphs.
     - Val set: Extract triggers from `152` instances. (Done)
+
+## 2023/01/18-2023/02/01
+- Sentence re-labeling. (check if the #instances is the same) (Running)
+    - In train set, 1 of the instances is abandoned. The local id is `290`. (Done)
+    - In test set and val set, #instances remain the same.
+- Check if the #paragarphs from data equals to our extraction.
+    - The first instance return true, check all instances. (Running)
+    - Create the titles as keys to pair with each paragraph. (Done)
+
