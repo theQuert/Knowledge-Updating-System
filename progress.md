@@ -219,6 +219,11 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
     - In train set, 1 of the instances is abandoned. The local id is `290`. (Done)
     - In test set and val set, #instances remain the same.
 - Check if the #paragarphs from data equals to our extraction.
-    - The first instance return true, check all instances. (Running)
+    - The first instance return true, check all instances. (Done)
     - Create the titles as keys to pair with each paragraph. (Done)
-
+ - `same_secs_old`: Text with un-matched #paragraphs.
+- `same_secs_new`: Text with prunning according to #paragraphs under sections.
+- `same_secs_insert`: Text with section name inserted.
+- Re-calculating the baseline. (merge the test and val set?) (Running)
+- Data Preparation (Done)
+- Data Labeling (Running)
