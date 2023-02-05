@@ -233,4 +233,6 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - `merged_updated*`: Merge the paragraphs and trigger in the source, then construct csv file.
 - Take test, val as different experiments, and calculate the baselines.
 - Data Labeling (Running) (already removed [ADD] sentences)
-- We need another algorithm to match paragraphs into its respective instance.
+- We need another algorithm to match paragraphs into its respective instance, record the num. (Done)
+- Train the encoder. (Running)
+- Re-calculate the baseline for test, val set. (Running)
