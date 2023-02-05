@@ -230,6 +230,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 
 ## 2023/02/01-2023/02/08
 - `same_secs_insert_labeled`: Text with section name inserted, and sentences are labeled. `csv` formats include "paragraphs without [ADD]", triggers and targets.
+- `merged_updated*`: Merge the paragraphs and trigger in the source, then construct csv file.
 - Take test, val as different experiments, and calculate the baselines.
 - Data Labeling (Running) (already removed [ADD] sentences)
 - We need another algorithm to match paragraphs into its respective instance.
