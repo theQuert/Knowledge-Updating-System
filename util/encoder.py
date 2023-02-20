@@ -329,3 +329,7 @@ print("")
 print("Training complete!")
 
 print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
+print("Saving the pretrained model and tokenzier!")
+model.save_pretrained("/home/quert/edit_NetKu/util/bart-encoder")
+tokenizer.save_pretrained("/home/quert/edit_NetKu/util/tokenizer-encoder")
+print("Completed!")
