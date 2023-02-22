@@ -245,23 +245,23 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ## 2023/02/15-2023/02/22
 - `BART` is fine-tuned for our task, and the articles are updated.
 - File names:
-`encoder.py`: the encoder script.
-`classification.py`: classification process with `encoder.py` trained model.
-`submission.csv`: the classification result.
-`eval_classification.py`: extract the classification report.
-`classification_report.csv`: the classification report.
-`generate.py`: generate the summaries with trained model.
-`generated_paragraphs.csv`: generated summaries.
-`pos_classification.csv`: extract the id with positive label.
-`updated_file.csv`: merge the updated and non-updated paragraphs.
-`final_merged.csv`: re-construct the instances. (`hyp` and `ref`)
-`final_hyp.src`: the splitted hyp file for calculate rouge score.
-`final_ref.tgt`: the splitted ref file for calculate rouge score.
-`decoder.py`: the decoder script.
+- `encoder.py`: the encoder script.
+- `classification.py`: classification process with `encoder.py` trained model.
+- `submission.csv`: the classification result.
+- `eval_classification.py`: extract the classification report.
+- `classification_report.csv`: the classification report.
+- `generate.py`: generate the summaries with trained model.
+- `generated_paragraphs.csv`: generated summaries.
+- `pos_classification.csv`: extract the id with positive label.
+- `updated_file.csv`: merge the updated and non-updated paragraphs.
+- `final_merged.csv`: re-construct the instances. (`hyp` and `ref`)
+- `final_hyp.src`: the splitted hyp file for calculate rouge score.
+- `final_ref.tgt`: the splitted ref file for calculate rouge score.
+- `decoder.py`: the decoder script.
 
 - Other files
-`merged_numpar_train/test/val.csv`: the numbers of paragraphs from each instance.
-`merged_train/test/val.csv`: concate the paragraph and its section.
-`merged_updated_train/test/val.csv`: concate the paragraph, section, and its trigger.
-`samesecs_triggers_train/test/val.txt`: the triggers of instances.
+- `merged_numpar_train/test/val.csv`: the numbers of paragraphs from each instance.
+- `merged_train/test/val.csv`: concate the paragraph and its section.
+- `merged_updated_train/test/val.csv`: concate the paragraph, section, and its trigger.
+- `samesecs_triggers_train/test/val.txt`: the triggers of instances.
 
