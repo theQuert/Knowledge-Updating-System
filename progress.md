@@ -265,6 +265,9 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - `merged_updated_train/test/val.csv`: concate the paragraph, section, and its trigger.
 - `samesecs_triggers_train/test/val.txt`: the triggers of instances.
 
-### Problems
-1. The ROUGE is strange, so the baseline is re-calculating...if the baseline is fine, re-construct the `final_ref.tgt`
+### TODO 
+1. The ROUGE is strange, so the baseline is re-calculating...if the baseline is fine, re-construct the `final_ref.tgt` (Done)
+2. ROUGE is fixed, calculate with other metrics.
+3. Experiment with ChatGPT.
+4. Decoder has to be fine-tuned with `same_secs_insert/train_text.txt.src` and `same_secs_insert/train_text.txt.tgt`
 
