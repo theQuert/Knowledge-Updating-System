@@ -267,7 +267,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 
 ### TODO 
 1. The ROUGE is strange, so the baseline is re-calculating...if the baseline is fine, re-construct the `final_ref.tgt` (Done)
-2. ROUGE is fixed, calculate with other metrics.
-3. Experiment with ChatGPT.
+2. ROUGE is fixed already, calculate with other metrics.
+3. More Experiments with ChatGPT.
 4. Decoder has to be fine-tuned with `same_secs_insert/train_text.txt.src` and `same_secs_insert/train_text.txt.tgt`
 
