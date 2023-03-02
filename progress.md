@@ -271,3 +271,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 3. More Experiments with ChatGPT.
 4. Decoder has to be fine-tuned with `same_secs_insert/train_text.txt.src` and `same_secs_insert/train_text.txt.tgt`
 
+## 2023/02/22-2023/03/01
+- Zero-shot and fine-tune with PRIMERA
+- PRIMERA as decoder (fine-tuned)
+
