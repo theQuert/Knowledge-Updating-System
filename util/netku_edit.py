@@ -9,7 +9,7 @@ import pycountry
 import pandas as pd
 import numpy as np
 
-pt_file = torch.load('/home/quert/edit_NetKu/NetKu/full_content/train.pt')
+pt_file = torch.load('/home/quert/edit_NetKu/NetKu/full_content/test.pt')
 # pt_file = torch.load('./eva_par.pt')
 # test_pt = torch.load('/home/quert/edit_NetKu/NetKu/summary/test.pt')
 # val_pt = torch.load('/home/quert/edit_NetKu/NetKu/summary/val.pt')
@@ -620,5 +620,5 @@ for idx in range(len(labeled)):
     idx_content['document'] = pt_file[idx]['document']
     idx_content['summary'] = labeled[idx].replace("[KEEP] \\c\\c", "\\c\\c [KEEP] ").replace("[ADD] \\c\\c", "\\c\\c [ADD] ").replace("[RM] \\c\\c", "\\c\\c [RM] ").replace("[SUB] \\c\\c", "\\c\\c [SUB] ")
     wrap.append(idx_content)
-torch.save(wrap, './train_labeled.pt')
+torch.save(wrap, './test_labeled.pt')
 error_df = pd.DataFrame({'error_idx': error_ids}).to_csv('./error_df.csv')
