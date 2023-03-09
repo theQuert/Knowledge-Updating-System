@@ -275,3 +275,9 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Zero-shot and fine-tune with PRIMERA
 - PRIMERA as decoder (fine-tuned)
 
+## 2023/03/01-2023/03/08
+- Expriments with ChatGPT api.
+
+## 2023/03/08-2023/03/15
+- Experiments on PRIMERA 
+- few-shots learning with ChatGPT api. (choose the highest, medium, lowest instances from two-staged BART)
