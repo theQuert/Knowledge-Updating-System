@@ -281,3 +281,9 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ## 2023/03/08-2023/03/15
 - Experiments on PRIMERA 
 - few-shots learning with ChatGPT api. (choose the highest, medium, lowest instances from two-staged BART)
+
+## 2023/03/22-2023/03/29
+- To run few-shots learning, we have to calculate the length of prompts first, then pick the one with the most editions. (only 70 instances fit this condition)
+- We already fed the prompt (idx=91) to ChatGPT(3.5) api, and re-calculate the input length if we only give the non-updated andthe triggred news.
+- Feed the 87 instances to api, then model has to generate the proper responses. (FSL in MAX Mode)
+- We have to extract the references of the 87 instances according to the indices, then contruct the `hyps` and `refs` for evaluation. (mark as MAX Mode, and this is NOT DONE yet.)
