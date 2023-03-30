@@ -289,3 +289,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - We have to extract the references of the 87 instances according to the indices, then contruct the `hyps` and `refs` for evaluation. (mark as MAX Mode, and this is NOT DONE yet.) (DONE)
 - `chatgpt_max_2`, `chatgpt_mean`, `chatgpt_min`: FSL with BART outputs (from our experiments).
 - `chatgpt_max_3`, `chatgpt_mean_2`, `chatgpt_min_2`: FSL with ground truths.
+
+## 2023/03/29-2023/04/05
+- Running few-shots with GPT-4. (few-shots and prompts in single message) (few-shots with 3 or 5 examples)
+- Check the `87` indices is same on one-shot GPT-3.5.
+- Re-evaluate the `87` instances in our experiments.
