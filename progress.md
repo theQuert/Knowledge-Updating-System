@@ -286,4 +286,6 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - To run few-shots learning, we have to calculate the length of prompts first, then pick the one with the most editions. (only 70 instances fit this condition)
 - We already fed the prompt (idx=91) to ChatGPT(3.5) api, and re-calculate the input length if we only give the non-updated andthe triggred news.
 - Feed the 87 instances to api, then model has to generate the proper responses. (FSL in MAX Mode)
-- We have to extract the references of the 87 instances according to the indices, then contruct the `hyps` and `refs` for evaluation. (mark as MAX Mode, and this is NOT DONE yet.)
+- We have to extract the references of the 87 instances according to the indices, then contruct the `hyps` and `refs` for evaluation. (mark as MAX Mode, and this is NOT DONE yet.) (DONE)
+- `chatgpt_max_2`, `chatgpt_mean`, `chatgpt_min`: FSL with BART outputs (from our experiments).
+- `chatgpt_max_3`, `chatgpt_mean_2`, `chatgpt_min_2`: FSL with ground truths.
