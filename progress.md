@@ -297,5 +297,5 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 
 ## 2023/04/05-2023/04/12
 - The GPT-4 is current in problem, cause timeout in our experiments, have to wait.
-- Sampling the `87` instances from our experiments, and re-evaluate.
+- Sampling the `87` instances from our experiments, and re-evaluate. (DONE)
 - Write down more details of the differences between `NetKu` and the dataset we currently applied.
