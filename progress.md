@@ -298,4 +298,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ## 2023/04/05-2023/04/12
 - The GPT-4 is current in problem, cause timeout in our experiments, have to wait.
 - Sampling the `87` instances from our experiments, and re-evaluate. (DONE)
-- Write down more details of the differences between `NetKu` and the dataset we currently applied.
+- Write down more details of the differences between `NetKu` and the dataset we currently applied- In order to feed FSL, we have to exclude the fixed prompts, and arrange the max input length for each shot (total 5 shots). -> max input length for each shot is `1600`
+- Means the length of old content + trigger + updated content has to be smaller than `1600`.
+- To get the shots, we concate the old content, trigger, and updated content from `87` instances, than get the indices which has lengths < `1600`. -> Turns out that there is `43` instances fit our conditions.
+- We have to access these `43` instances, than get the *max*, *mean*, and *min* instances to feed into FSL.
