@@ -301,4 +301,10 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Write down more details of the differences between `NetKu` and the dataset we currently applied- In order to feed FSL, we have to exclude the fixed prompts, and arrange the max input length for each shot (total 5 shots). -> max input length for each shot is `1600`
 - Means the length of old content + trigger + updated content has to be smaller than `1600`.
 - To get the shots, we concate the old content, trigger, and updated content from `87` instances, than get the indices which has lengths < `1600`. -> Turns out that there is `43` instances fit our conditions.
-- We have to access these `43` instances, than get the *max*, *mean*, and *min* instances to feed into FSL.
+- We have to access these `43` instances, than get the *max*, *mean*, and *min* instances to feed with FSL.
+
+## 2023/04/12-2023/04/19
+- One-shot learning: experiment with `GPT-3.5` and `GPT-4`.
+- Prompts for one-shot learning: The first prompt has to tell GPT to update according with the triggered news, so that would fit our goal. Another prompt to test: Prompt has to tell GPT to update contents according to important person/time/places...
+- The duration time of our experiments has to be noted.
+- Lastly, do few-shot learning: sorting order has to be rearrange randomly 3 times, then calculate mean scores.
