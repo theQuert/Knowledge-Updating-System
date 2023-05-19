@@ -308,3 +308,9 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Prompts for one-shot learning: The first prompt has to tell GPT to update according with the triggered news, so that would fit our goal. Another prompt to test: Prompt has to tell GPT to update contents according to important person/time/places...
 - The duration time of our experiments has to be noted.
 - Lastly, do few-shot learning: sorting order has to be rearrange randomly 3 times, then calculate mean scores.
+
+## 2023/05/18-2023/05/25
+- Prepare the prompt files for experiments (zeroshot, fewshot)
+- Full-supervised on Vicuna(13B) and Bard.
+- More try on GPT-4.
+- Use the GPT as decoder.
