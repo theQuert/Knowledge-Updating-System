@@ -312,5 +312,6 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ## 2023/05/18-2023/05/25
 - Prepare the prompt files for experiments (zeroshot, fewshot)
 - Full-supervised on Vicuna(13B) and Bard.
+- Clean the code for non-updated, updated merging.
 - More try on GPT-4.
 - Use the GPT as decoder.
