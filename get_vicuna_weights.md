@@ -2,7 +2,7 @@
 ### Install `FastChat`
 
 ```BASH
-pip install urllib3==1.26.15'
+pip install urllib3==1.26.15
 pip install fschat
 ```
 
