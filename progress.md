@@ -310,8 +310,9 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Lastly, do few-shot learning: sorting order has to be rearrange randomly 3 times, then calculate mean scores.
 
 ## 2023/05/18-2023/05/25
-- Prepare the prompt files for experiments (zeroshot, fewshot)
-- Full-supervised on Vicuna(13B) and Bard.
+- Prepare the prompt files for experiments (decoder, inference) (Done) (./for_decoder_exp)
+- Prepare the lengths statistics for decoder inputs.
+- Full-supervised on Vicuna(13B) and Bard. (as an decoder first)
 - Clean the code for non-updated, updated merging.
 - More try on GPT-4.
 - Use the GPT as decoder.
