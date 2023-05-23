@@ -17,6 +17,17 @@ pip install -e .
 
 ### Download the LLaMA weights (7B / 13B) 
 - You need the LLaMA weights in advanced.
+- Essentials: `13B.zip`, `tokenizer_check.chk`, `tokenizer.model`
+
+```
+mkdir unconverted_weights/
+cd unconverted_weights/
+gdown id_of_13B.zip
+gdown id_of_tokenizer_check.chk
+gdown id_of_tokenizer.model
+unzip ./13B.zip
+```
+
 - Convert the LLaMA weights to HF format
 
 ```BASH
