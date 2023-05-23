@@ -317,3 +317,5 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - More try on GPT-4.
 - Use the GPT as decoder.
 - If conduct fine-tune on LLaMA based models, LoRA or Adapter would be in consideration.
+- Vicuna + LoRA? (as decoder)
+    - prepare json file (paragraph-level) for LoRA?
