@@ -316,3 +316,4 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Clean the code for non-updated, updated merging.
 - More try on GPT-4.
 - Use the GPT as decoder.
+- If conduct fine-tune on LLaMA based models, LoRA or Adapter would be in consideration.
