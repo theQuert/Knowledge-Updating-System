@@ -45,6 +45,6 @@ cd ../
 mkdir vicuna_13b
 python3 -m fastchat.model.apply_delta \
     --base ./llama_13b_hf \
-    --delta Ejafa/vicuna_13B_vanilla_1.1 \
+    --delta lmsys/vicuna-13b-delta-v1.1 \
     --target ./vicuna_13b
 ```
