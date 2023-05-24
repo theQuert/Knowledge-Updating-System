@@ -40,11 +40,23 @@ python ./convert_llama_weights_to_hf.py
 
 - Create the Vicuna Weights (LLaMA + delta = Vicuna)
 
-```
+```BASH
 cd ../
 mkdir vicuna_13b
 python3 -m fastchat.model.apply_delta \
     --base ./llama_13b_hf \
     --delta lmsys/vicuna-13b-delta-v1.1 \
     --target ./vicuna_13b
+```
+
+- Call Vicuna! (with 1 GPU)
+
+```BASH
+python3 -m fastchat.serve.cli --model-path ./vicuna_13b
+```
+
+- Call Vicuna! (with multiple GPUs)
+
+```BASH
+python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
 ```
