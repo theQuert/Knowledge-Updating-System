@@ -61,3 +61,7 @@ python3 -m fastchat.serve.cli --model-path ./vicuna_13b
 ```BASH
 python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
 ```
+
+### Requirments (for 13B model)
+- GPU: A100 (40GB)
+- Memory: 60GB as least
