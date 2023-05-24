@@ -18,6 +18,7 @@ pip install -e .
 ### Download the LLaMA weights (7B / 13B) 
 - You need the LLaMA weights in advanced.
 - Essentials: `13B.zip`, `tokenizer_check.chk`, `tokenizer.model`
+- GDrive id for essentials: `1JZHKkCwPjHeT-G1nC7jWIzTOLDmr5sei`, `1Zvmted1fyjQZexs3CKJ_lglPr0M4jZqS`, `1o3qeWnkMsntE2ZXMp5CHssahUYN2TN9d`
 
 ```
 mkdir unconverted_weights/
