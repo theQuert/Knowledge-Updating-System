@@ -311,11 +311,13 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 
 ## 2023/05/18-2023/05/25
 - Prepare the prompt files for experiments (decoder, inference) (Done) (./for_decoder_exp)
-- Prepare the lengths statistics for decoder inputs.
-- Full-supervised on Vicuna(13B) and Bard. (as an decoder first)
+- Use Vicuna-13B as decoder to produce paragraphs. (ing)
+    - Merge updated and non-updated paragraphs to article.
+- Fine-tune Vicuna-13B in paragraph-level?
+- Prepare the lengths statistics for decoder inputs, both the ground truths and decoder outputs (paragraph-level). (Done)
 - Clean the code for non-updated, updated merging.
-- More try on GPT-4.
-- Use the GPT as decoder.
+- More try on GPT-4. (trying)
+- Use the GPT as decoder. (trying)
 - If conduct fine-tune on LLaMA based models, LoRA or Adapter would be in consideration.
-- Vicuna + LoRA? (as decoder)
+- Vicuna + LoRA? (as decoder) (zero-shot)
     - prepare json file (paragraph-level) for LoRA?
