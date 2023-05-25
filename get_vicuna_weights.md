@@ -42,7 +42,6 @@ python ./convert_llama_weights_to_hf.py
 - Create the Vicuna Weights (LLaMA + delta = Vicuna)
 
 ```BASH
-cd ../
 mkdir vicuna_13b
 python3 -m fastchat.model.apply_delta \
     --base ./llama_13b_hf \
