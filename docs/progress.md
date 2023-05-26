@@ -325,3 +325,4 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Prepare the finetune code for Vicuna+LoRA.
     - Prepare the script to convert our data to meet the `./sample/lora_chinese_repo.jsonl`
     - Install packages according to the requirements during finetuning Vicuna with LoRA approach (./requirements_finetune_vicuna.txt)
+- Prepare the merging code (for merging the non-upated and updated paragraphs into full articles)
