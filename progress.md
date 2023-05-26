@@ -321,3 +321,4 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - If conduct fine-tune on LLaMA based models, LoRA or Adapter would be in consideration.
 - Vicuna + LoRA? (as decoder) (zero-shot)
     - prepare json file (paragraph-level) for LoRA?
+- Compare the code between `finetune.py` and `finetune_lora.py` from lit-llama repo
