@@ -31,10 +31,7 @@ else:
     device = torch.device("cpu")
 
 df = pd.read_csv('/home/quert/edit_NetKu/dataset/same_secs_insert_labeled/resample_train.csv')
-df.info()
-
 df = df[["paragraph", "target"]]
-df.info()
 
 # Import test and val data
 # /home/quert/edit_NetKu/dataset/same_secs_insert_labeled
