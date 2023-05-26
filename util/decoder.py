@@ -105,16 +105,16 @@ trainer.train()
 test_data_pt = test_data.map(convert_examples_to_features, batched = True)
 
 ## Save model
-model.save_pretrained("tuned_bart_decoder")
+model.save_pretrained("bart_decoder")
 
 ## Save tokenizer
 tokenizer.save_pretrained("tuned_bart_tokenizer")
 
-tokenizer = AutoTokenizer.from_pretrained("tuned_bart_tokenizer")
+# tokenizer = AutoTokenizer.from_pretrained("tuned_bart_tokenizer")
 
-gen_kwargs = {"length_penalty": 0.8, "num_beams":8, "max_length": 128}
+# gen_kwargs = {"length_penalty": 0.8, "num_beams":8, "max_length": 128}
 
-pipe = pipeline("summarization", model="tuned_bart_decoder",tokenizer=tokenizer)
+# pipe = pipeline("summarization", model="tuned_bart_decoder",tokenizer=tokenizer)
 
-text = ''
-print(pipe(text))
+# text = ''
+# print(pipe(text))
