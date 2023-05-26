@@ -32,7 +32,7 @@ unzip ./13B.zip
 - Convert the LLaMA weights to HF format
 
 ```BASH
-mkdir ./llama_13b_hf
+mkdir llama_13b_hf
 cd FastChat/
 pip install protobuf==3.20.0
 python ./convert_llama_weights_to_hf.py
