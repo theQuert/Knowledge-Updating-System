@@ -327,3 +327,4 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
     - Install packages according to the requirements during finetuning Vicuna with LoRA approach (./requirements_finetune_vicuna.txt)
 - Prepare the merging code (for merging the non-upated and updated paragraphs into full articles)
 - After completing Vicuna+LoRA, we have to merge Vicuna with our fit (LoRA)? [Ref](https://github.com/Facico/Chinese-Vicuna/tree/master/tools)
+- We may have to create another venv for finetune Vicuna with LoRA.
