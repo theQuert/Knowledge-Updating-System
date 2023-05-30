@@ -63,7 +63,7 @@ python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
 
 ### Finetune Vicuna
 - Essentials: **Our Data in json format**, *scripts from [here](https://github.com/theQuert/NetKUp/tree/main/util/Vicuna)*
-- `fine_vicuna_lora.py`: modify the pat hin **L27-L29**, then run it.
+- `fine_vicuna_lora.py`: modify the path in **L27-L29**, then run it.
 - `vicuna_generate.py`: modify the path as well in **L16-L17**.
 - `generate.sh`: run it.
 - Prepare data in json format: [Reference](https://github.com/theQuert/NetKUp/blob/main/util/Vicuna/json_sample.py)
