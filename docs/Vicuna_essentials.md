@@ -66,7 +66,7 @@ python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
 - `fine_vicuna_lora.py`: modify the pat hin **L27-L29**, then run it.
 - `vicuna_generate.py`: modify the path as well in **L16-L17**.
 - `generate.sh`: run it.
-- Prepare data in json format: [Reference](https://github.com/theQuert/NetUp/tree/main/util/Vicuna/json_sample.py)
+- Prepare data in json format: [Reference](https://github.com/theQuert/NetKUp/blob/main/util/Vicuna/json_sample.py)
 
 ### Requirments (for 13B model)
 - GPU: A100 (40GB)
