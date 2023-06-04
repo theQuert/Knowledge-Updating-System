@@ -6,6 +6,7 @@ import gradio as gr
 import argparse
 import warnings
 import os
+import pandas as pd
 from utils import StreamPeftGenerationMixin,StreamLlamaForCausalLM
 assert (
     "LlamaTokenizer" in transformers._import_structure["models.llama"]
@@ -13,8 +14,8 @@ assert (
 from transformers import LlamaTokenizer, LlamaForCausalLM, GenerationConfig
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--model_path", type=str, default="vicuna_13b") # replaced with Vicuna checkpoints
-parser.add_argument("--lora_path", type=str, default="lora-Vicuna") # replaced with Vicuna+LoRA checkpoints
+parser.add_argument("--model_path", type=str, default="/home/quert/vicuna_13b") # replaced with Vicuna checkpoints
+parser.add_argument("--lora_path", type=str, default="/home/quert/NetKUp/util/lora-Vicuna") # replaced with Vicuna+LoRA checkpoints
 parser.add_argument("--use_typewriter", type=int, default=1)
 parser.add_argument("--use_local", type=int, default=1)
 args = parser.parse_args()
@@ -154,8 +155,11 @@ def evaluate(
                 # if show_text== '':
                 #     yield last_show_text
                 # else:
-                yield show_text
-            yield outputs[0].split("### Response:")[1].strip().replace('�','')
+                # yield show_text
+            # yield outputs[0].split("### Response:")[1].strip().replace('�','')
+            output = outputs[0].split("### Response:")[1].strip().replace('�','')
+            outputs = outputs[0].split("### Response:")[1].strip().replace('�','')
+            yield output 
         else:
             generation_output = model.generate(
                 input_ids=input_ids,
@@ -167,35 +171,45 @@ def evaluate(
             output = generation_output.sequences[0]
             output = tokenizer.decode(output).split("### Response:")[1].strip()
             print(output)
-            yield output
+            # yield output
+            outputs = outputs[0].split("### Response:")[1].strip().replace('�','')
+            yield output 
 
 
-gr.Interface(
-    fn=evaluate,
-    inputs=[
-        gr.components.Textbox(
-            lines=2, label="Input", placeholder="Tell me about alpacas."
-        ),
-        gr.components.Slider(minimum=0, maximum=1, value=0.1, label="Temperature"),
-        gr.components.Slider(minimum=0, maximum=1, value=0.75, label="Top p"),
-        gr.components.Slider(minimum=0, maximum=100, step=1, value=40, label="Top k"),
-        gr.components.Slider(minimum=1, maximum=10, step=1, value=4, label="Beams Number"),
-        gr.components.Slider(
-            minimum=1, maximum=2000, step=1, value=256, label="Max New Tokens"
-        ),
-        gr.components.Slider(
-            minimum=1, maximum=300, step=1, value=1, label="Min New Tokens"
-        ),
-        gr.components.Slider(
-            minimum=0.1, maximum=10.0, step=0.1, value=2.0, label="Repetition Penalty"
-        ),
-    ],
-    outputs=[
-        gr.inputs.Textbox(
-            lines=25,
-            label="Output",
-        )
-    ],
-    title="Finetuned-Vicuna",
-    description="Code modified by theQuert",
-).queue().launch(share=True)
+# gr.Interface(
+#     fn=evaluate,
+#     inputs=[
+#         gr.components.Textbox(
+#             lines=2, label="Input", placeholder="Tell me about alpacas."
+#         ),
+#         gr.components.Slider(minimum=0, maximum=1, value=0.1, label="Temperature"),
+#         gr.components.Slider(minimum=0, maximum=1, value=0.75, label="Top p"),
+#         gr.components.Slider(minimum=0, maximum=100, step=1, value=40, label="Top k"),
+#         gr.components.Slider(minimum=1, maximum=10, step=1, value=4, label="Beams Number"),
+#         gr.components.Slider(
+#             minimum=1, maximum=2000, step=1, value=256, label="Max New Tokens"
+#         ),
+#         gr.components.Slider(
+#             minimum=1, maximum=300, step=1, value=1, label="Min New Tokens"
+#         ),
+#         gr.components.Slider(
+#             minimum=0.1, maximum=10.0, step=0.1, value=2.0, label="Repetition Penalty"
+#         ),
+#     ],
+#     outputs=[
+#         gr.inputs.Textbox(
+#             lines=25,
+#             label="Output",
+#         )
+#     ],
+#     title="Finetuned-Vicuna",
+#     description="Code modified by theQuert",
+# ).queue().launch(share=True)
+
+# Load your data, here demonstrate with csv format, and the prompts are in "prompt" column
+inputs_df = pd.read_csv("../dataset/for_decoder_exp/prompts_paragraphs.csv") # modifiy the path to yours
+prompts_input = inputs_df.prompt.to_list()
+responses = [next(evaluate(prompts_input[idx])) for idx in range(len(prompts_input))]
+# Output the responses in csv file
+pd.DataFrame({"response": responses}).to_csv("../generation/finetuned-vicuna_13b_as_decoder/outputs.csv")
+
