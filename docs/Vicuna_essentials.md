@@ -49,13 +49,13 @@ python3 -m fastchat.model.apply_delta \
     --target ./vicuna_13b
 ```
 
-- Call Vicuna! (with 1 GPU)
+- Call Vicuna in interactive mode! (with 1 GPU)
 
 ```BASH
 python3 -m fastchat.serve.cli --model-path ./vicuna_13b
 ```
 
-- Call Vicuna! (with multiple GPUs)
+- Call Vicuna in interactive mode! (with multiple GPUs)
 
 ```BASH
 python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
@@ -67,6 +67,12 @@ python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
 - `vicuna_generate.py`: modify the path as well in **L16-L17**.
 - `generate.sh`: run it.
 - Prepare data in json format: [Reference](https://github.com/theQuert/NetKUp/blob/main/util/Vicuna/json_sample.py)
+- Call Vicuna in api mode (vanilla and fine-tuned Vicuna)
+
+```BASH
+# you have to modify the path in L210, L214 first
+python3 ./util/Vicuna/vicuna_generate.py'
+```
 
 ### Requirments (for 13B model)
 - GPU: A100 (40GB)
