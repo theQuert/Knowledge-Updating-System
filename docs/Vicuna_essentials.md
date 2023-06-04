@@ -71,7 +71,7 @@ python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
 
 ```BASH
 # you have to modify the path in L210, L214 first
-python3 ./util/Vicuna/vicuna_generate.py'
+python3 ./util/Vicuna/vicuna_generate.py
 ```
 
 ### Requirments (for 13B model)
