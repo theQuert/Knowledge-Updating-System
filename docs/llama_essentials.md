@@ -35,8 +35,9 @@ unzip ./13B.zip
 mkdir llama_13b_hf
 cd FastChat/
 pip install protobuf==3.20.0
-python ./convert_llama_weights_to_hf.py
---input_dir ../unconverted_weights --model_size 13B --output_dir ../llama_13b_hf
+pip install -r ./requirements_finetune_vicuna.txt
+pip install git+https://github.com/huggingface/transformers
+python ./convert_llama_weights_to_hf.py --input_dir ./unconverted_weights --model_size 13B --output_dir ./llama_13b_hf
 ```
 
 - Create the Vicuna Weights (LLaMA + delta = Vicuna)
@@ -64,9 +65,9 @@ python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
 ### Finetune and Inference (LLaMA, Vicuna)
 - Essentials: **Data in json format**, *scripts from [here](https://github.com/theQuert/NetKUp/tree/main/util/Vicuna)*
 - The weights are fed in HF format.
-- `finetune_with_lora.py`: modify the path in **L27-L29**, then run it.
-- `vicuna_generate.py`: modify the path as well in **L16-L17**.
-- `util/generate.py`: run it.
+- `./NetKUp/util/Vicuna/finetune_with_lora.py`: modify the path in **L27-L29**, then run it.
+- `./NetKUp/util/Vicuna/vicuna_generate.py`: modify the path as well in **L16-L17**.
+- Inference: `./NetKUp/util/Vicuna/vicuna_generate.py`: run it.
 - Prepare data in json format: [Reference](https://github.com/theQuert/NetKUp/blob/main/util/Vicuna/json_sample.py)
 - Call Vicuna in api mode (vanilla and fine-tuned Vicuna)
 
