@@ -13,8 +13,8 @@ sudo apt-get update
 sudo apt-get -y install cuda
 sudo apt -y install nvidia-cuda-toolkit
 # prepare torch environment
-sudo apt install python3-pip
+sudo apt install -y python3-pip
 sudo pip3 install torch torchvision torchaudio
 # install venv
-sudo apt instal python3.8-venv
+sudo apt install python3.8-venv
 
