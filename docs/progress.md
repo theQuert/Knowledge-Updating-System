@@ -366,3 +366,33 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - conduct the merging process
 - scoring the outputs
 
+## 2023/06/08-2023/06/15
+####  LLaMA + Alpaca
+- finetune the HF format LLaMA(13B) with `alpaca.json` -> [llama-alpaca] (DONE)
+- after finetune, conduct [llama-alpaca] to do zero-shot, feed the `prompts_paragraphs.csv` to do the decoding process (DONE)
+- inference (DONE)
+- conduct the merging process (DONE)
+- scoring the outputs (DONE)
+
+#### Further finetune with our data
+- fintune the [llama-alpaca] with `merge.json` (ING)
+- do inference
+- conduct the merging process
+- scoring the outputs
+
+#### LoRA format
+- Convert the HF format llama to lit-llama format
+- fintune the lit-llama with Alpaca
+- Finetune the Alpaca with NetKu
+
+#### Upload the weights to NAS
+- HF format
+	- LLaMA
+	- Vicuna
+- Lit-LLaMA format
+	- LLaMA
+	- Alpaca
+	- Alpaca+NetKu
+- Our format
+	- Alpaca
+	- Vicuna+NetKu
