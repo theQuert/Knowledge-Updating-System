@@ -328,3 +328,41 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Prepare the merging code (for merging the non-upated and updated paragraphs into full articles)
 - After completing Vicuna+LoRA, we have to merge Vicuna with our fit (LoRA)? [Ref](https://github.com/Facico/Chinese-Vicuna/tree/master/tools)
 - We may have to create another venv for finetune Vicuna with LoRA.
+
+## 2023/06/01-2023/06/08
+### lit-llama
+####  LLaMA weights (unconverted weights)
+- we have `tokenizer.model`, `pytorch.bin`, `tokenizer_check.chk`
+
+####  We have to convert the pytorch-format weights to lit-llama format
+- we get `*.pth`, `tokenizer.model`
+
+####  what if we convert the llama to HF foramt (use the llama-HF from Vicuna process)
+####  after finetuning with LoRA, we have to convert the llama-lora to HF format to feed into `generate.py` (fintuned with the script in Vicuna process)
+
+### Vicuna
+#### LLaMA weights (unconverted weights)
+- we have `tokenizer.model`, `pytorch.bin`, `tokenizer_check.chk`
+
+####  We have to convert the pytorch-format weights to HF format
+- we get the llama in HF format
+- For expriments on llama: we may do the inference with llama (HF format directly)
+
+####  We have to merge the delta weights with llama to form Vicuna in HF format
+- we get Vicuna 13B in HF format
+
+#### Inference with Vicuna in HF format
+
+####  LLaMA + Alpaca
+- finetune the HF format LLaMA(13B) with `alpaca.json` -> [llama-alpaca] (DONE)
+- after finetune, conduct [llama-alpaca] to do zero-shot, feed the `prompts_paragraphs.csv` to do the decoding process (DONE)
+- inference (ING)
+- conduct the merging process
+- scoring the outputs
+
+#### Further finetune with our data
+- fintune the [llama-alpaca] with `merge.json`
+- do inference
+- conduct the merging process
+- scoring the outputs
+
