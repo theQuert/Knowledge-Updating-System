@@ -24,9 +24,9 @@ from peft import (
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--wandb", action="store_true", default=False)
-parser.add_argument("--data_path", type=str, default="merge.json") # specify with your data path
-parser.add_argument("--output_path", type=str, default="lora-finetuned") # replaced with your preferred output path
-parser.add_argument("--model_path", type=str, default="./vicuna_13b") # replace with the un-lora model path (HF format)
+parser.add_argument("--data_path", type=str, default="/home/quert/NetKUp/dataset/vicuna_inputs/merge.json") # our custom data
+parser.add_argument("--output_path", type=str, default="lora-Vicuna") # the output path for finetued weights
+parser.add_argument("--model_path", type=str, default="/home/quert/vicuna_13b_hf/") # the path for pretrained model
 parser.add_argument("--eval_steps", type=int, default=200)
 parser.add_argument("--save_steps", type=int, default=200)
 parser.add_argument("--test_size", type=int, default=200)

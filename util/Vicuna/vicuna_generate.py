@@ -14,8 +14,8 @@ assert (
 from transformers import LlamaTokenizer, LlamaForCausalLM, GenerationConfig
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--model_path", type=str, default="/home/quert/vicuna_13b") # replaced with un-lora (HF format) checkpoints
-parser.add_argument("--lora_path", type=str, default="/home/quert/NetKUp/util/lora-Vicuna") # replaced with loraed checkpoints
+parser.add_argument("--model_path", type=str, default="/home/quert/vicuna_13b_hf") # replaced with Vicuna checkpoints
+parser.add_argument("--lora_path", type=str, default="/home/quert/NetKUp/util/lora-Vicuna") # replaced with Vicuna+LoRA checkpoints
 parser.add_argument("--use_typewriter", type=int, default=1)
 parser.add_argument("--use_local", type=int, default=1)
 args = parser.parse_args()
@@ -27,7 +27,7 @@ BASE_MODEL = args.model_path
 LORA_WEIGHTS = args.lora_path
 
 
-# fix the path for local checkpoint (comments if you do inference with un-lora model)
+# fix the path for local checkpoint
 lora_bin_path = os.path.join(args.lora_path, "adapter_model.bin")
 print(lora_bin_path)
 if not os.path.exists(lora_bin_path) and args.use_local:
@@ -60,7 +60,7 @@ if device == "cuda":
         device_map={"": 0},
     )
     model = StreamPeftGenerationMixin.from_pretrained(
-        model, LORA_WEIGHTS, torch_dtype=torch.float16, device_map={"": 0} # comments if you do inference with un-lora model
+        model, LORA_WEIGHTS, torch_dtype=torch.float16, device_map={"": 0}
     )
 elif device == "mps":
     model = LlamaForCausalLM.from_pretrained(
@@ -206,10 +206,8 @@ def evaluate(
 #     description="Code modified by theQuert",
 # ).queue().launch(share=True)
 
-# Load your data, here demonstrate with csv format, and the prompts are in "prompt" column
-inputs_df = pd.read_csv("../dataset/for_decoder_exp/prompts_paragraphs.csv") # modifiy the path to yours
+inputs_df = pd.read_csv("/home/quert/NetKUp/dataset/prompts_paragraphs.csv")
 prompts_input = inputs_df.prompt.to_list()
 responses = [next(evaluate(prompts_input[idx])) for idx in range(len(prompts_input))]
-# Output the responses in csv file
-pd.DataFrame({"response": responses}).to_csv("../generation/finetuned-vicuna_13b_as_decoder/outputs.csv")
+pd.DataFrame({"response": responses}).to_csv("/home/quert/NetKUp/generation/vicuna_13b_finetuned_as_decoder/outputs.csv")
 
