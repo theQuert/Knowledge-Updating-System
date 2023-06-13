@@ -50,32 +50,21 @@ python3 -m fastchat.model.apply_delta \
     --target ./vicuna_13b
 ```
 
-- Call Vicuna in interactive mode! (with 1 GPU)
-
-```BASH
-python3 -m fastchat.serve.cli --model-path ./vicuna_13b
-```
-
-- Call Vicuna in interactive mode! (with multiple GPUs)
-
-```BASH
-python3 -m fastchat.serve.cli --model-path ./vicuna_13b --num-gpus 2ormore
-```
-
 ### Finetune and Inference (LLaMA, Vicuna)
 - Essentials: **Data in json format**, *scripts from [here](https://github.com/theQuert/NetKUp/tree/main/util/Vicuna)*
 - The weights are fed in HF format.
-- `./NetKUp/util/Vicuna/finetune_with_lora.py`: modify the path in **L27-L29**, then run it.
-- `./NetKUp/util/Vicuna/vicuna_generate.py`: modify the path as well in **L16-L17**.
+- `./NetKUp/util/Vicuna/finetune_vicuna_lora.py`: modify the path in **L27-L29**, then run it.
+- `./NetKUp/util/Vicuna/vicuna_generate.py`: modify the path as well in **L17-L18**, **L209-L212**.
 - Inference: `./NetKUp/util/Vicuna/vicuna_generate.py`: run it.
 - Prepare data in json format: [Reference](https://github.com/theQuert/NetKUp/blob/main/util/Vicuna/json_sample.py)
 - Call Vicuna in api mode (vanilla and fine-tuned Vicuna)
 
 ```BASH
-# you have to modify the path in L17, L18, L210, L214 first
 python3 ./util/Vicuna/vicuna_generate.py
 ```
 
 ### Requirments (for 13B model)
 - GPU: A100 (40GB)
 - Memory: 60GB as least
+
+### To finetune with LLaMA, see here: [NetKUp-llama](https://github.com/theQuert/NetKUp-llama)
