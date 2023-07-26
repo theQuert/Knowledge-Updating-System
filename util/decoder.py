@@ -15,7 +15,7 @@ from datasets import Dataset, load_metric
 import datasets
 # nltk.download("punkt")
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from transformers import TrainingArguments, Trainer
+from transformers import TrainingArguments, Trainer, DataCollatorForSeq2Seq
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -59,11 +59,11 @@ def calculate_metric_on_test_ds(dataset, metric, model, tokenizer,
     score = metric.compute()
     return score
 
-train_df = pd.read_csv("/content/drive/MyDrive/NetKu/experiments/same_secs_insert_labeled/train.csv")
+train_df = pd.read_csv("/home/quert/NetKUp/dataset/same_secs_insert_labeled/train.csv")
 train_df = train_df[["document", "summary"]]
-test_df = pd.read_csv("/content/drive/MyDrive/NetKu/experiments/same_secs_insert_labeled/test.csv")
+test_df = pd.read_csv("/home/quert/NetKUp/dataset/same_secs_insert_labeled/test.csv")
 test_df = test_df[["document", "summary"]]
-val_df = pd.read_csv("/content/drive/MyDrive/NetKu/experiments/same_secs_insert_labeled/val.csv")
+val_df = pd.read_csv("/home/quert/NetKUp/dataset/same_secs_insert_labeled/val.csv")
 val_df = val_df[["document", "summary"]]
 train_data = Dataset.from_pandas(train_df)
 test_data = Dataset.from_pandas(test_df)
@@ -105,10 +105,10 @@ trainer.train()
 test_data_pt = test_data.map(convert_examples_to_features, batched = True)
 
 ## Save model
-model.save_pretrained("bart_decoder")
+model.save_pretrained("bart-decoder")
 
 ## Save tokenizer
-tokenizer.save_pretrained("tuned_bart_tokenizer")
+tokenizer.save_pretrained("tokenizer-decoder")
 
 # tokenizer = AutoTokenizer.from_pretrained("tuned_bart_tokenizer")
 

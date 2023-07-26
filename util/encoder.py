@@ -30,13 +30,14 @@ else:
     print('No GPU available, using the CPU instead.')
     device = torch.device("cpu")
 
-df = pd.read_csv('/home/quert/edit_NetKu/dataset/same_secs_insert_labeled/resample_train.csv')
+df = pd.read_csv('/home/quert/NetKUp/dataset/same_secs_insert_labeled/resample_train_re.csv')
+# df = pd.read_csv('/home/quert/NetKUp/dataset/same_secs_insert_labeled/resample_train.csv')
 df = df[["paragraph", "target"]]
 
 # Import test and val data
 # /home/quert/edit_NetKu/dataset/same_secs_insert_labeled
-test_data = pd.read_csv('/home/quert/edit_NetKu/dataset/same_secs_insert_labeled/merged_updated_test.csv')
-val_data = pd.read_csv('/home/quert/edit_NetKu/dataset/same_secs_insert_labeled/merged_updated_val.csv')
+test_data = pd.read_csv('/home/quert/NetKUp/dataset/same_secs_insert_labeled/merged_updated_test.csv')
+val_data = pd.read_csv('/home/quert/NetKUp/dataset/same_secs_insert_labeled/merged_updated_val.csv')
 test_data = test_data[['paragraph', 'target']]
 val_data = test_data[['paragraph', 'target']]
 data_train = df
@@ -118,7 +119,7 @@ def preprocessing_bart(data, labels):
         encoded_dict = tokenizer.encode_plus(
             text=text_preprocessing(sent),  # Preprocess sentence
             add_special_tokens=True,        # Add `[CLS]` and `[SEP]`
-            max_length=600,                  # Max length to truncate/pad
+            max_length=800,                  # Max length to truncate/pad
             pad_to_max_length=True,         # Pad sentence to max length
             return_tensors='pt',           # Return PyTorch tensor
             return_attention_mask=True,
@@ -146,7 +147,7 @@ input_ids, attention_masks, labels = preprocessing_bart(X_val, y_val)
 val_dataset = TensorDataset(input_ids, attention_masks, labels)
 
 # Create DataLoader
-batch_size = 16
+batch_size = 8 
 
 train_dataloader = DataLoader(
             train_dataset,
@@ -327,6 +328,6 @@ print("Training complete!")
 
 print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
 print("Saving the pretrained model and tokenzier!")
-model.save_pretrained("/home/quert/edit_NetKu/util/bart-encoder")
-tokenizer.save_pretrained("/home/quert/edit_NetKu/util/tokenizer-encoder")
+model.save_pretrained("/home/quert/NetKUp/util/bart-encoder")
+tokenizer.save_pretrained("/home/quert/NetKUp/util/tokenizer-encoder")
 print("Completed!")
