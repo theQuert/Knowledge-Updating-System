@@ -396,3 +396,8 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Our format
 	- Alpaca
 	- Vicuna+NetKu
+
+## 2023/07/20-2023/07/27
+- Find the instances with different non-updated article and updated articles.  (Done)
+- Check the output of system (1. Single paragraph update 2. Three paragraphs update 3. Check the length of outputs 4. Check with full article update) 
+- Fix the problem of taking the full content as decoder inputs.
