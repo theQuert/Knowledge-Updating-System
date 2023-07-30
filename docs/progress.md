@@ -401,3 +401,12 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Find the instances with different non-updated article and updated articles.  (Done)
 - Check the output of system (1. Single paragraph update (Done) 2. Three paragraphs update (Done) 3. Check the length of outputs (Done) 4. Check with full article update) 
 - Fix the problem of taking the full content as decoder inputs.
+- We may have to do the ablation study to examine if the section name is needed in inference and training processes.
+
+## 2023/07/27-2023/08/03
+- Fix inputs bugs, and add GPT-3.5 decoder supports.
+- Add Vicuna support.
+- We may have to do the ablation study to examine if the section name is needed in inference and training processes.
+- Add merging visualization.
+- Migrate the codebase to IMLab server and create backup VM on GCP.
+- Change the api key of GPT if the usage limit is fixed.
