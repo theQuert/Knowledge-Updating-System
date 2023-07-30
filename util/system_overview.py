@@ -21,6 +21,7 @@ import transformers
 from transformers import BartForSequenceClassification, AdamW, BartTokenizer, get_linear_schedule_with_warmup, pipeline, set_seed
 from transformers import pipeline, set_seed, BartTokenizer
 from datasets import load_dataset, load_metric
+from dotenv import load_dotenv
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from nltk.tokenize import sent_tokenize
 from datasets import Dataset, load_metric
@@ -29,6 +30,8 @@ import gradio as gr
 import openai
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from transformers import TrainingArguments, Trainer
+# from vicuna_generate import *
+# from convert_article import *
 
 # Data preprocessing
 
@@ -107,38 +110,65 @@ def decode(paragraphs_needed):
     contexts = [str(pipe(paragraph)) for paragraph in paragraphs_needed]
     return contexts
 
-def convert_input_csv(input_article):
-    if len(input_article.split("\n")) > len(input_article.split("\\c\\c")):
-        paragaphs = input_article.split("\n")
-    else: paragraphs = input_article.split("\\c\\c")
-    paragraphs = [par.strip() for par in paragraphs if par]
-    # split input article into paragraphs and store in csv format
-    # pars = [paragraphs[idx]+"\n" for idx in range(len(paragraphs))]
-    pd.DataFrame({"paragraph": paragraphs}).to_csv("./experiments/input_paragraphs.csv")
-    return paragraphs
+def split_article(article):
+    # if "\c" in article.split():
+    paragraphs = article.replace("\\c\\c", "\c\c").split("\\\\c\\\\c")
+    pars = [par.strip() for par in paragraphs if par]
+   #  else: 
+   #      paragraphs = article.split("\n")
+   #      pars = [par.strip() for par in paragraphs if par]
+    pd.DataFrame({"paragraph": pars}).to_csv("./experiments/input_paragraphs.csv")
+    return pars 
+
+def config():
+    load_dotenv()
 
 def call_gpt(paragraph, trigger):
-    openai.api_key = ""
+    openai.api_key = os.getenv("openai_apikey")
     tokenizer = BartTokenizer.from_pretrained("tokenizer-decoder")
-    length = len(tokenizer(paragraph))
     inputs_for_gpt = f"""
-    As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
-Non-updated paragraph:
-{paragraph}
+As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
+    Non-updated paragraph:
+    {paragraph}
 
-Triggered News:
-{trigger}
-    """
+    Triggered News:
+    {trigger}
+        """
+        # merged_with_prompts.append(merged.strip())
+        # pd.DataFrame({"paragraph": merged_with_prompts}).to_csv("./experiments/paragraphs_with_prompts.csv")
+
     completion = openai.ChatCompletion.create(
-        model = "gpt-3.5-turbo",
-        messages = [
-            {"role": "user", "content": inputs_for_gpt}
-        ]
-    )
+         model = "gpt-3.5-turbo",
+         messages = [
+             {"role": "user", "content": inputs_for_gpt}
+         ]
+     )
     response = completion.choices[0].message.content
     return str(response)
 
+def call_vicuna(paragraphs_tirgger):
+    tokenizer = BartTokenizer.from_pretrained("tokenizer-decoder")
+    merged_with_prompts = []
+    for paragraph in paragraphs:
+        merged = f"""
+As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
+    Non-updated paragraph:
+    {paragraph}
+
+    Triggered News:
+    {trigger}
+        """
+        merged_with_prompts.append(merged.strip())
+        pd.DataFrame({"paragraph": merged_with_prompts}).to_csv("./experiments/paragraphs_with_prompts.csv")
+    responses = vicuna_output()
+    return responses
+
+    
+
 def main(input_article, input_trigger):
+    csv_path = "./experiments/input_paragraphs.csv"
+    if os.path.isfile(csv_path):
+        os.remove(csv_path)
     modified = "TRUE"
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn', do_lower_case=True)
@@ -149,11 +179,10 @@ def main(input_article, input_trigger):
                       lr = 2e-5,
                       eps = 1e-8
                     )
-    
+
     # split the input article to paragraphs in tmp csv format
-    data_test = convert_input_csv(input_article)
-    # test_data = pd.read_csv('./experiments/input_paragraphs.csv')
-    # data_test = list(test_data.paragraph.values)
+    data_test = split_article(input_article)
+
     seed_val = 42
     random.seed(seed_val)
     np.random.seed(seed_val)
@@ -162,11 +191,11 @@ def main(input_article, input_trigger):
 
     input_ids = []
     attention_masks = []
-    for paragraph in data_test:
+    for sent in data_test:
         encoded_dict = tokenizer.encode_plus(
-                            text_preprocessing(paragraph),                     
-                            add_special_tokens = True, 
-                            max_length = 1024,           
+                            text_preprocessing(sent),
+                            add_special_tokens = True,
+                            max_length = 1024,
                             pad_to_max_length = True,
                             return_attention_mask = True,
                             return_tensors = 'pt',
@@ -189,8 +218,8 @@ def main(input_article, input_trigger):
     for batch in test_dataloader:
             b_input_ids = batch[0].to(device)
             b_input_mask = batch[1].to(device)
-            with torch.no_grad():        
-                output= model(b_input_ids, 
+            with torch.no_grad():
+                output= model(b_input_ids,
                               attention_mask=b_input_mask)
                 logits = output.logits
                 logits = logits.detach().cpu().numpy()
@@ -210,8 +239,10 @@ def main(input_article, input_trigger):
     pd.DataFrame({"paragraph": paragraphs_needed}).to_csv("./experiments/paragraphs_needed.csv", index=False)
 
     # updated_paragraphs = decode(input_paragraph, input_trigger)
-    input_trigger = input_trigger.strip()
+    config()
     updated_paragraphs = [call_gpt(paragraph, input_trigger) for paragraph in paragraphs_needed]
+    # updated_paragraphs = call_vicuna(paragraphs_needed, input_trigger)
+
     # merge updated paragraphs with non-updated paragraphs
     paragraphs_merged = data_test.copy()
     for idx in range(len(pos_ids)):
@@ -220,15 +251,18 @@ def main(input_article, input_trigger):
     sep = "\n"
     updated_article = str(sep.join(paragraphs_merged))
     updated_article = updated_article.replace("[{'summary_text': '", "").replace("'}]", "").strip()
-    class_res = pd.read_csv("./experiments/classification_result.csv")
+    class_res = pd.read_csv("./experiments/classification.csv")
     if class_res.target.values.all() == 0: modified="False"
-    if len(predictions)==1: 
+
+    if len(data_test)==1: 
         modified="TRUE"
         updated_article = call_gpt(input_article, input_trigger)
+
     # combine the predictions and paragraphs into csv format file
     merged_par_pred_df = pd.DataFrame({"paragraphs": data_test, "predictions": predictions}).to_csv("./experiments/par_with_class.csv")
     # return updated_article, modified, merged_par_pred_df
-    return updated_article, modified
+    modified_in_all = str(len(paragraphs_needed)) + " / " + str(len(data_test))
+    return updated_article, modified_in_all
 
 
 gr.Interface(
@@ -248,7 +282,7 @@ gr.Interface(
         ),
         gr.inputs.Textbox(
             lines=1,
-            label="MODIFIED"
+            label="#MODIFIED/ALL"
         ),
         # gr.Dataframe()
     ],
