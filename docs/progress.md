@@ -410,3 +410,5 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Add merging visualization.
 - Migrate the codebase to IMLab server and create backup VM on GCP.
 - Change the api key of GPT if the usage limit is fixed.
+- Migrate the repo to Huggingface spaces.
+- Check the distribution of train data for encoder.
