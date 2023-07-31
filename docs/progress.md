@@ -404,11 +404,12 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - We may have to do the ablation study to examine if the section name is needed in inference and training processes.
 
 ## 2023/07/27-2023/08/03
-- Fix inputs bugs, and add GPT-3.5 decoder supports.
-- Add Vicuna support.
+- Fix inputs bugs, and add GPT-3.5 decoder supports. (Done)
+- Add Vicuna support. (Done)
 - We may have to do the ablation study to examine if the section name is needed in inference and training processes.
 - Add merging visualization.
+- Highlight the modified paragraphs in updated article.
 - Migrate the codebase to IMLab server and create backup VM on GCP.
-- Change the api key of GPT if the usage limit is fixed.
+- Change the api key of GPT if the usage limit is fixed. (Done)
 - Migrate the repo to Huggingface spaces.
 - Check the distribution of train data for encoder.
