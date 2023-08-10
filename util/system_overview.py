@@ -27,6 +27,7 @@ from nltk.tokenize import sent_tokenize
 from datasets import Dataset, load_metric
 import datasets
 import gradio as gr
+import pyperclip
 import openai
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from transformers import TrainingArguments, Trainer
@@ -110,13 +111,10 @@ def decode(paragraphs_needed):
     contexts = [str(pipe(paragraph)) for paragraph in paragraphs_needed]
     return contexts
 
-def split_article(article):
-    # if "\c" in article.split():
+def split_article(article, trigger):
+    if article.split("\n"): article = article.replace("\n", "\\\\c\\\\c")
     paragraphs = article.replace("\\c\\c", "\c\c").split("\\\\c\\\\c")
-    pars = [par.strip() for par in paragraphs if par]
-   #  else: 
-   #      paragraphs = article.split("\n")
-   #      pars = [par.strip() for par in paragraphs if par]
+    pars = [str(par) + " -- " + str(trigger) for par in paragraphs]
     pd.DataFrame({"paragraph": pars}).to_csv("./experiments/input_paragraphs.csv")
     return pars 
 
@@ -164,7 +162,6 @@ As an article writer, your task is to provide an updated paragraph in the length
     return responses
 
     
-
 def main(input_article, input_trigger):
     csv_path = "./experiments/input_paragraphs.csv"
     if os.path.isfile(csv_path):
@@ -172,16 +169,16 @@ def main(input_article, input_trigger):
     modified = "TRUE"
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn', do_lower_case=True)
-    tokenizer = AutoTokenizer.from_pretrained('tokenizer-encoder')
+    tokenizer = AutoTokenizer.from_pretrained('./model_v1/tokenizer-encoder')
     batch_size = 8
-    model = torch.load("bart_model")
+    model = torch.load("./model_v1/bart_model")
     optimizer = AdamW(model.parameters(),
                       lr = 2e-5,
                       eps = 1e-8
                     )
 
     # split the input article to paragraphs in tmp csv format
-    data_test = split_article(input_article)
+    data_test = split_article(input_article, input_trigger)
 
     seed_val = 42
     random.seed(seed_val)
@@ -195,7 +192,7 @@ def main(input_article, input_trigger):
         encoded_dict = tokenizer.encode_plus(
                             text_preprocessing(sent),
                             add_special_tokens = True,
-                            max_length = 1024,
+                            max_length = 600,
                             pad_to_max_length = True,
                             return_attention_mask = True,
                             return_tensors = 'pt',
@@ -240,15 +237,17 @@ def main(input_article, input_trigger):
 
     # updated_paragraphs = decode(input_paragraph, input_trigger)
     config()
-    updated_paragraphs = [call_gpt(paragraph, input_trigger) for paragraph in paragraphs_needed]
+    updated_paragraphs = [call_gpt(paragraph.split(" -- ")[0], input_trigger) for paragraph in paragraphs_needed]
     # updated_paragraphs = call_vicuna(paragraphs_needed, input_trigger)
 
     # merge updated paragraphs with non-updated paragraphs
     paragraphs_merged = data_test.copy()
+    paragraphs_merged = [str(par).split(" -- ")[0] for par in paragraphs_merged]
     for idx in range(len(pos_ids)):
         paragraphs_merged[pos_ids[idx]] = updated_paragraphs[idx]
 
     sep = "\n"
+    # paragarphs_merged = ["".join(par.split(" -- ")[:-1]) for par in paragraphs_merged]
     updated_article = str(sep.join(paragraphs_merged))
     updated_article = updated_article.replace("[{'summary_text': '", "").replace("'}]", "").strip()
     class_res = pd.read_csv("./experiments/classification.csv")
@@ -257,6 +256,8 @@ def main(input_article, input_trigger):
     if len(data_test)==1: 
         modified="TRUE"
         updated_article = call_gpt(input_article, input_trigger)
+    with open("./experiments/updated_article.txt", "w") as f:
+        f.write(updated_article)
 
     # combine the predictions and paragraphs into csv format file
     merged_par_pred_df = pd.DataFrame({"paragraphs": data_test, "predictions": predictions}).to_csv("./experiments/par_with_class.csv")
@@ -264,6 +265,10 @@ def main(input_article, input_trigger):
     modified_in_all = str(len(paragraphs_needed)) + " / " + str(len(data_test))
     return updated_article, modified_in_all
 
+def copy_to_clipboard(t):
+    with open("./experiments/updated_article.txt", "r") as f:
+        t = f.read()
+        pyperclip.copy(t)
 
 gr.Interface(
     fn=main,
@@ -284,7 +289,9 @@ gr.Interface(
             lines=1,
             label="#MODIFIED/ALL"
         ),
-        # gr.Dataframe()
+        # btn = gr.Button(value="Copy Updated Article to Clipboard")
+        # btn.click(copy_to_clipboard)
+        # gr.components.Button(value="Copy Updated Article to Clipboard", fn=copy_to_clipboard),
     ],
     title="Event Triggered Article Updating System",
     description="Powered by YTLee",
