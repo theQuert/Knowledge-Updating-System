@@ -1,4 +1,6 @@
-As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
+# For article input: each paragraph has to be separated with "\\c\\c". (in ``join`` method, apply `\\\\c\\\\c')
+As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a 
+triggered news.
 
 Non-updated paragraph:
 {paragraph}
