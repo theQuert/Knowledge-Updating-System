@@ -29,13 +29,28 @@ else:
     print('No GPU available, using the CPU instead.')
     device = torch.device("cpu")
 
+df = pd.read_csv('/home/quert/NetKUp/dataset/same_secs_insert_labeled/resample_train.csv')
+df.info()
+
+df = df[["paragraph", "target"]]
+df.info()
+
 # Import test and val data
 # /home/quert/edit_NetKu/dataset/same_secs_insert_labeled
-test_data = pd.read_csv('./input_data')
-test_data = test_data[['paragraph']]
+test_data = pd.read_csv('/home/quert/NetKUp/dataset/same_secs_insert_labeled/merged_updated_test.csv')
+val_data = pd.read_csv('/home/quert/NetKUp/dataset/same_secs_insert_labeled/merged_updated_val.csv')
+test_data = test_data[['paragraph', 'target']]
+val_data = test_data[['paragraph', 'target']]
+data_train = df
+data_val = val_data
 data_test = test_data
 # 
+X_train = data_train.paragraph.values
+y_train = data_train.target.values
+X_val = data_val.paragraph.values
+y_val = data_val.target.values
 X_test = data_test.paragraph.values
+y_test = data_test.paragraph.values
 
 # Data preprocessing
 
@@ -90,7 +105,7 @@ tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn', do_lower_ca
 
 batch_size = 16
 
-model = torch.load("bart_model")
+model = torch.load("./bart_model")
 
 optimizer = AdamW(model.parameters(),
                   lr = 2e-5,
@@ -165,5 +180,5 @@ for batch in test_dataloader:
 
 # Write dataframe and csv file
 df_output = pd.DataFrame()
-df_output['target'] = predictions
-df_output.to_csv('output_classification.csv',index=False)
+df_output['target'] =predictions
+df_output.to_csv('./submission.csv',index=False)
