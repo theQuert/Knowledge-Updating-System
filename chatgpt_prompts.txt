@@ -1,15 +1,7 @@
-As an article writer, you have to update an article given its old version and a triggered news event.\n\n
-Here's the OLD version and the new information, and you have to give me the updated version.\n\n
+As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
 
-OLD VERSION:\n\n
+Non-updated paragraph:
+{paragraph}
 
-'In early November 2021, Ukrainian intelligence assessed the information about the transfer of additional Russian troops to the Ukrainian borders to be "an element of psychological pressure." A week later, the Office of the President of Ukraine acknowledged that Russia was building up "specific groups of troops" near the border. Ukrainian foreign minister Dmytro Kuleba urged the French and German governments to prepare for a possible military scenario of Russia\'s actions against Ukraine. On 15 November, Zelensky and the head of the European Council (EUCO) Charles Michel discussed "the security situation along the borders of Ukraine." On the same day, Kuleba held talks on the same issues in Brussels. [ADD] <Renewed tensions (October 2021–present) - Second Russian military buildup>'
-
-\n\nNEW INFORMATION:\n\n
-
-"The Ukrainian government accuses Russian separatists of shelling a kindergarten in Stanytsia Luhanska, Luhansk Oblast using artillery, injuring three civilians. The Luhansk People's Republic says that its forces were attacked by the Ukrainian military with mortars, grenade launchers and machine gun fire. At least 32 shells hit the city, causing power outages and damaging multiple structures.  \n"
-
-#370
-
-one-shot (3), mean edits (highest, lowest)
-random
+Triggered News:
+{trigger}
