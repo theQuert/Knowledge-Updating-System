@@ -413,3 +413,12 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Change the api key of GPT if the usage limit is fixed. (Done)
 - Migrate the repo to Huggingface spaces.
 - Check the distribution of train data for encoder.
+
+## 2023/08/10-2023/08/17
+- Fix the num_labels of state_dict() format model.
+- Check the loading of model with HF from_pretrained.
+- Upload the model to HF and spaces.
+- If HF Space could host the system -> Done.
+- Otherwise, host the model with IMLab server. (if this works, we don't have to convert pytorch-format model to state_dict to fit HF).
+- Add the button to copy contexts.
+- Highlight the edited paragraphs.
