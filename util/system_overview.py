@@ -169,9 +169,9 @@ def main(input_article, input_trigger):
     modified = "TRUE"
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn', do_lower_case=True)
-    tokenizer = AutoTokenizer.from_pretrained('./model_v1/tokenizer-encoder')
+    tokenizer = AutoTokenizer.from_pretrained('./tokenizer-encoder')
     batch_size = 8
-    model = torch.load("./model_v1/bart_model")
+    model = torch.load("./bart_model")
     optimizer = AdamW(model.parameters(),
                       lr = 2e-5,
                       eps = 1e-8
