@@ -417,12 +417,19 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 ## 2023/08/10-2023/08/17
 - Fix the num_labels of state_dict() format model.
 - Check the loading of model with HF from_pretrained.
-- Upload the model to HF and spaces.
+- Upload the model to HF and spaces. (Done)
 - If HF Space could host the system -> Done.
 - Otherwise, host the model with IMLab server. (if this works, we don't have to convert pytorch-format model to state_dict to fit HF).
 - Add the button to copy contexts.
 - Highlight the edited paragraphs.
-- Deployment is successful, but we have to upload our tokenizer to Hub.
-- Add serect key to Space.
-- Sync the requirements and system_overview with HF.
-- Delete Space, and recreate.
+- Deployment is successful, but we have to upload our tokenizer to Hub. (Done)
+- Delete Space, and create new one. (Done)
+- Add serect key to Space. (Done)
+- Sync the requirements and system_overview with HF. (Done)
+- [REF](https://www.gradio.app/docs/examples)
+- **Gradio**:
+    - Create Space on website.
+    - Clone the Space, then later update with git.
+    - Upload core model with website.
+    - Add model weight to gitignore
+
