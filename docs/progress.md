@@ -422,3 +422,7 @@ tokenizer.save_pretrained('../PRIMER_wcep/new')
 - Otherwise, host the model with IMLab server. (if this works, we don't have to convert pytorch-format model to state_dict to fit HF).
 - Add the button to copy contexts.
 - Highlight the edited paragraphs.
+- Deployment is successful, but we have to upload our tokenizer to Hub.
+- Add serect key to Space.
+- Sync the requirements and system_overview with HF.
+- Delete Space, and recreate.
