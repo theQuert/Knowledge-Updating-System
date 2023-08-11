@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 import matplotlib.pyplot as plt
-import seaborn as sn
 import warnings
 import nltk
 import random, time
@@ -123,7 +122,7 @@ def config():
 
 def call_gpt(paragraph, trigger):
     openai.api_key = os.getenv("openai_apikey")
-    tokenizer = BartTokenizer.from_pretrained("tokenizer-decoder")
+    tokenizer = BartTokenizer.from_pretrained("tokenizer-encoder")
     inputs_for_gpt = f"""
 As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
     Non-updated paragraph:
@@ -145,7 +144,7 @@ As an article writer, your task is to provide an updated paragraph in the length
     return str(response)
 
 def call_vicuna(paragraphs_tirgger):
-    tokenizer = BartTokenizer.from_pretrained("tokenizer-decoder")
+    tokenizer = BartTokenizer.from_pretrained("./model/tokenizer-decoder")
     merged_with_prompts = []
     for paragraph in paragraphs:
         merged = f"""
@@ -169,9 +168,9 @@ def main(input_article, input_trigger):
     modified = "TRUE"
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn', do_lower_case=True)
-    tokenizer = AutoTokenizer.from_pretrained('./tokenizer-encoder')
+    tokenizer = AutoTokenizer.from_pretrained('tokenizer-encoder')
     batch_size = 8
-    model = torch.load("./bart_model")
+    model = torch.load("bart_model")
     optimizer = AdamW(model.parameters(),
                       lr = 2e-5,
                       eps = 1e-8
@@ -270,22 +269,49 @@ def copy_to_clipboard(t):
         t = f.read()
         pyperclip.copy(t)
 
-gr.Interface(
-    fn=main,
-    inputs=[
-        gr.components.Textbox(
+# gr.Interface(
+#     fn=main,
+#     inputs=[
+#         gr.components.Textbox(
+#             lines=2, label="Non-updated Article", placeholder="Input the article..."
+#         ),
+#         gr.components.Textbox(
+#             lines=2, label="Triggered News Event", placeholder="Input the triggered news event..."
+#         )
+#     ],
+#     outputs=[
+#         gr.inputs.Textbox(
+#             lines=25,
+#             label="Output",
+#         ),
+#         gr.inputs.Textbox(
+#             lines=1,
+#             label="#MODIFIED/ALL"
+#         ),
+#         # btn = gr.Button(value="Copy Updated Article to Clipboard")
+#         # btn.click(copy_to_clipboard)
+#         # gr.components.Button(value="Copy Updated Article to Clipboard", fn=copy_to_clipboard),
+#     ],
+#     title="Event Triggered Article Updating System",
+#     description="Powered by YTLee",
+# ).queue().launch(share=True)
+
+demo = gr.Interface(
+    main,
+    [
+        gr.Textbox(
             lines=2, label="Non-updated Article", placeholder="Input the article..."
         ),
-        gr.components.Textbox(
+        gr.Textbox(
             lines=2, label="Triggered News Event", placeholder="Input the triggered news event..."
         )
     ],
-    outputs=[
-        gr.inputs.Textbox(
+    [
+        gr.Textbox(
             lines=25,
             label="Output",
         ),
-        gr.inputs.Textbox(
+        gr.Textbox(
             lines=1,
             label="#MODIFIED/ALL"
         ),
@@ -295,4 +321,6 @@ gr.Interface(
     ],
     title="Event Triggered Article Updating System",
     description="Powered by YTLee",
-).queue().launch(share=True)
+)
+
+demo.launch()
