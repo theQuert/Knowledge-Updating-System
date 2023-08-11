@@ -104,7 +104,7 @@ def format_time(elapsed):
 
 def decode(paragraphs_needed):
     # model_ckpt = "facebook/bart-large-cnn"
-    tokenizer = AutoTokenizer.from_pretrained("tokenizer-decoder")
+    tokenizer = AutoTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     # pipe = pipeline("summarization", model="bart-decoder",tokenizer=tokenizer)
     pipe = pipeline("summarization", model="hyesunyun/update-summarization-bart-large-longformer",tokenizer=tokenizer)
     contexts = [str(pipe(paragraph)) for paragraph in paragraphs_needed]
@@ -122,7 +122,7 @@ def config():
 
 def call_gpt(paragraph, trigger):
     openai.api_key = os.getenv("openai_apikey")
-    tokenizer = BartTokenizer.from_pretrained("tokenizer-encoder")
+    tokenizer = BartTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     inputs_for_gpt = f"""
 As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
     Non-updated paragraph:
@@ -144,7 +144,7 @@ As an article writer, your task is to provide an updated paragraph in the length
     return str(response)
 
 def call_vicuna(paragraphs_tirgger):
-    tokenizer = BartTokenizer.from_pretrained("./model/tokenizer-decoder")
+    tokenizer = BartTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     merged_with_prompts = []
     for paragraph in paragraphs:
         merged = f"""
@@ -168,9 +168,9 @@ def main(input_article, input_trigger):
     modified = "TRUE"
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn', do_lower_case=True)
-    tokenizer = AutoTokenizer.from_pretrained('tokenizer-encoder')
+    tokenizer = AutoTokenizer.from_pretrained('theQuert/NetKUp-tokenzier')
     batch_size = 8
-    model = torch.load("bart_model")
+    model = torch.load("./bart_model")
     optimizer = AdamW(model.parameters(),
                       lr = 2e-5,
                       eps = 1e-8
@@ -297,16 +297,16 @@ def copy_to_clipboard(t):
 # ).queue().launch(share=True)
 
 demo = gr.Interface(
-    main,
-    [
-        gr.Textbox(
+	main,
+	[
+    	gr.Textbox(
             lines=2, label="Non-updated Article", placeholder="Input the article..."
         ),
         gr.Textbox(
             lines=2, label="Triggered News Event", placeholder="Input the triggered news event..."
         )
     ],
-    [
+	[
         gr.Textbox(
             lines=25,
             label="Output",
