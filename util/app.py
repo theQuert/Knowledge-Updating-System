@@ -111,29 +111,31 @@ def decode(paragraphs_needed):
     return contexts
 
 def split_article(article, trigger):
-    if article.split("\n"): article = article.replace("\n", "\\\\c\\\\c")
-    paragraphs = article.replace("\\c\\c", "\c\c").split("\\\\c\\\\c")
+    if len(article.split("\\n ")) > len(article.split("\\\\c\\\\c")):
+        paragraphs = article.split("\\n ")
+    else:
+        paragraphs = article.split("\\\\c\\\\c")
     pars = [str(par) + " -- " + str(trigger) for par in paragraphs]
-    pd.DataFrame({"paragraph": pars}).to_csv("./experiments/input_paragraphs.csv")
-    return pars 
+    # pd.DataFrame({"paragraphs": paragraphs}).to_csv("./util/experiments/check_par.csv")
+    format_pars = [par for par in paragraphs]
+    formatted_input = "\n".join(format_pars)
+    return pars, formatted_input 
 
 def config():
     load_dotenv()
 
 def call_gpt(paragraph, trigger):
-    openai.api_key = os.getenv("openai_apikey")
+    # openai.api_key = os.environ.get("GPT-API")
+    openai.api_key = ""
     tokenizer = BartTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     inputs_for_gpt = f"""
-As an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.
+s an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.Remember, the length of updated paragraph is restricted into a single paragraph.
     Non-updated paragraph:
     {paragraph}
 
     Triggered News:
     {trigger}
         """
-        # merged_with_prompts.append(merged.strip())
-        # pd.DataFrame({"paragraph": merged_with_prompts}).to_csv("./experiments/paragraphs_with_prompts.csv")
-
     completion = openai.ChatCompletion.create(
          model = "gpt-3.5-turbo",
          messages = [
@@ -141,6 +143,8 @@ As an article writer, your task is to provide an updated paragraph in the length
          ]
      )
     response = completion.choices[0].message.content
+    if "<"+response.split("<")[-1].strip() == "<"+paragraph.split("<")[-1].strip(): response = response 
+    else: response = response + " <"+paragraph.split("<")[-1].strip()
     return str(response)
 
 def call_vicuna(paragraphs_tirgger):
@@ -162,22 +166,35 @@ As an article writer, your task is to provide an updated paragraph in the length
 
     
 def main(input_article, input_trigger):
-    csv_path = "./experiments/input_paragraphs.csv"
-    if os.path.isfile(csv_path):
-        os.remove(csv_path)
+paths = [".util/experiments/input_paragraphs.csv",
+             "./util/experiments/formatted_input.txt",
+             "./util/experiments/updated_article.txt",
+             "./util/experiments/paragraphs_needed.txt",
+             "./util/experiments/updated_paragraphs.txt",
+             "./util/experiments/paragraphs_with_prompts.csv",
+             "./util/experiments/classification.csv",
+             "./util/experiments/paragraphs_needed.csv",
+             "./util/experiments/par_with_class.csv",
+             ]
+    for path in paths: 
+        try:
+            if os.path.isfile(path): os.remove(path)
+        except: continue 
     modified = "TRUE"
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn', do_lower_case=True)
     tokenizer = AutoTokenizer.from_pretrained('theQuert/NetKUp-tokenzier')
     batch_size = 8
-    model = torch.load("./bart_model")
+    model = torch.load("./util/bart_model")
     optimizer = AdamW(model.parameters(),
                       lr = 2e-5,
                       eps = 1e-8
                     )
 
     # split the input article to paragraphs in tmp csv format
-    data_test = split_article(input_article, input_trigger)
+    data_test, formatted_input = split_article(input_article, input_trigger)
+    with open("./util/experiments/formatted_input.txt", "w") as f:
+        f.write(formatted_input)
 
     seed_val = 42
     random.seed(seed_val)
@@ -223,7 +240,7 @@ def main(input_article, input_trigger):
                 predictions.extend(list(pred_flat))
 
     # Write predictions for each paragraph
-    df_output = pd.DataFrame({"target": predictions}).to_csv('./experiments/classification.csv', index=False)
+    df_output = pd.DataFrame({"target": predictions}).to_csv('./util/experiments/classification.csv', index=False)
     if len(data_test)==1: predictions[0] = 1
 
     # extract ids for update-needed paragraphs (extract the idx with predicted target == 1)
@@ -232,12 +249,21 @@ def main(input_article, input_trigger):
 
     # feed the positive paragraphs to decoder
     paragraphs_needed = [data_test[idx] for idx in pos_ids]
-    pd.DataFrame({"paragraph": paragraphs_needed}).to_csv("./experiments/paragraphs_needed.csv", index=False)
+    paragraphs_needed = [par.split(" -- ")[0].replace("[ADD]", "") for par in paragraphs_needed]
+    pd.DataFrame({"paragraph": paragraphs_needed}).to_csv("./util/experiments/paragraphs_needed.csv", index=False)
+    paragraphs_needed_str = "\n\n".join(paragraphs_needed)
+    # paragraphs_needed_str = paragraphs_needed_str.replace("Updated Paragraph:\n", "")
+    with open("./util/experiments/paragraphs_needed.txt", "w") as f:
+        f.write(paragraphs_needed_str)
 
     # updated_paragraphs = decode(input_paragraph, input_trigger)
-    config()
-    updated_paragraphs = [call_gpt(paragraph.split(" -- ")[0], input_trigger) for paragraph in paragraphs_needed]
     # updated_paragraphs = call_vicuna(paragraphs_needed, input_trigger)
+    config()
+    updated_paragraphs = [call_gpt(paragraph, input_trigger) for paragraph in paragraphs_needed]
+    updated_paragraphs_str = "\n\n".join(updated_paragraphs)
+    updated_paragraphs_str = updated_paragraphs_str.replace("Updated Paragraph:\n", "")
+    with open("./util/experiments/updated_paragraphs.txt", "w") as f:
+        f.write(updated_paragraphs_str)
 
     # merge updated paragraphs with non-updated paragraphs
     paragraphs_merged = data_test.copy()
@@ -269,58 +295,79 @@ def copy_to_clipboard(t):
         t = f.read()
         pyperclip.copy(t)
 
-# gr.Interface(
-#     fn=main,
-#     inputs=[
-#         gr.components.Textbox(
-#             lines=2, label="Non-updated Article", placeholder="Input the article..."
-#         ),
-#         gr.components.Textbox(
-#             lines=2, label="Triggered News Event", placeholder="Input the triggered news event..."
-#         )
-#     ],
-#     outputs=[
-#         gr.inputs.Textbox(
-#             lines=25,
-#             label="Output",
-#         ),
-#         gr.inputs.Textbox(
-#             lines=1,
-#             label="#MODIFIED/ALL"
-#         ),
-#         # btn = gr.Button(value="Copy Updated Article to Clipboard")
-#         # btn.click(copy_to_clipboard)
-#         # gr.components.Button(value="Copy Updated Article to Clipboard", fn=copy_to_clipboard),
-#     ],
-#     title="Event Triggered Article Updating System",
-#     description="Powered by YTLee",
-# ).queue().launch(share=True)
+def compare_versions():
+    with open("./util/experiments/paragraphs_needed.txt", "r") as f:
+        old = f.read()
+        old = old.replace("[ADD]", "")
+    with open("./util/experiments/updated_paragraphs.txt", "r") as f:
+        new = f.read()
+        new = new.replace("[ADD]", "")
+    return old, new
 
-demo = gr.Interface(
-	main,
-	[
-    	gr.Textbox(
-            lines=2, label="Non-updated Article", placeholder="Input the article..."
-        ),
-        gr.Textbox(
-            lines=2, label="Triggered News Event", placeholder="Input the triggered news event..."
+with open("./examples/non_update.txt", "r") as f:
+    exin_1 = f.read()
+with open("./examples/trigger.txt", "r") as f:
+    trigger_1 = f.read()
+with open("./examples/non_update_2.txt", "r") as f:
+    exin_2 = f.read()
+with open("./examples/trigger_2.txt", "r") as f:
+    trigger_2 = f.read()
+
+with gr.Blocks() as demo:
+    gr.HTML("""<div style="text-align: center; max-width: 700px; margin: 0 auto;">
+            <div
+            style="
+                display: inline-flex;
+                align-items: center;
+                gap: 0.8rem;
+                font-size: 1.75rem;
+            "
+            >
+            <h1 style="font-weight: 900; margin-bottom: 7px; margin-top: 5px;">
+                Event Triggered Article Updating System
+            </h1>
+            </div>"""
         )
-    ],
-	[
-        gr.Textbox(
-            lines=25,
-            label="Output",
-        ),
-        gr.Textbox(
-            lines=1,
-            label="#MODIFIED/ALL"
-        ),
-        # btn = gr.Button(value="Copy Updated Article to Clipboard")
-        # btn.click(copy_to_clipboard)
-        # gr.components.Button(value="Copy Updated Article to Clipboard", fn=copy_to_clipboard),
-    ],
-    title="Event Triggered Article Updating System",
-    description="Powered by YTLee",
-)
+    with gr.Tab("Article Updating"):
+        input_1 = gr.Textbox(label="Non-updated Article", lines=2, placeholder="Input the contexts...")
+        input_2 = gr.Textbox(label="Triggered News Event", lines=1, placeholder="Input the triggered news event...") 
+        btn = gr.Button(value="Submit")
+        with gr.Row():
+            output_1 = gr.Textbox(label="Updated Article", lines=5)
+            output_2 = gr.Textbox(label="#MODIFIED / #ALL")
+        btn.click(fn=main, inputs=[input_1, input_2], outputs=[output_1, output_2])
+        btn_copy = gr.Button(value="Copy Updated Article to Clipboard")
+        btn_copy.click(fn=copy_to_clipboard, inputs=[output_1], outputs=[])
+        gr.Markdown("## Input Examples")
+        gr.Markdown("### There are 2 examples below, click them to test inputs automatically!")
+        gr.Examples(
+            examples=[[exin_1, trigger_1], [exin_2, trigger_2]],
+            fn=main,
+            inputs=[input_1, input_2],
+            outputs=[output_1, output_2],
+            # cache_examples=True,
+            # run_on_click=True,
+                ),
+        com_1_value, com_2_value = "Pls finish article updating, then click the button above", "Pls finish article updating, then click the button above."
+    with gr.Tab("Compare between versions"):
+        btn_com = gr.Button(value="Differences Highlighting")
+        with gr.Row():
+            com_1 = gr.Textbox(label="Non-update Article", value=com_1_value, lines=15)
+            com_2 = gr.Textbox(label="Updated Article", value=com_2_value, lines=15)
+        btn_com.click(fn=compare_versions, inputs=[], outputs=[com_1, com_2])
+    gr.HTML("""
+            <div align="center">
+                <p>
+                Demo by 🤗 <a href="https://github.com/thequert" target="_blank"><b>Yu-Ting Lee</b></a>
+                </p>
+            </div>
+            <div align="center">
+                <p>
+                Supported by <a href="https://www.nccu.edu.tw/"><b>National Chengchi University</a></b> & <a href="https://www.sinica.edu.tw/"><b>Academia Sinica</b></a>
+                </p>
+            </div>
+        """
+        )
 
 demo.launch()
+
