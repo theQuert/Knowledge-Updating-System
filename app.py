@@ -126,7 +126,6 @@ def config():
 
 def call_gpt(paragraph, trigger):
     # openai.api_key = os.environ.get("GPT-API")
-    openai.api_key = ""
     tokenizer = BartTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     inputs_for_gpt = f"""
 s an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.Remember, the length of updated paragraph is restricted into a single paragraph.
@@ -160,13 +159,13 @@ As an article writer, your task is to provide an updated paragraph in the length
     {trigger}
         """
         merged_with_prompts.append(merged.strip())
-        pd.DataFrame({"paragraph": merged_with_prompts}).to_csv("./experiments/paragraphs_with_prompts.csv")
+        pd.DataFrame({"paragraph": merged_with_prompts}).to_csv("./util/experiments/paragraphs_with_prompts.csv")
     responses = vicuna_output()
     return responses
 
     
 def main(input_article, input_trigger):
-paths = [".util/experiments/input_paragraphs.csv",
+    paths = [".util/experiments/input_paragraphs.csv",
              "./util/experiments/formatted_input.txt",
              "./util/experiments/updated_article.txt",
              "./util/experiments/paragraphs_needed.txt",
@@ -275,23 +274,23 @@ paths = [".util/experiments/input_paragraphs.csv",
     # paragarphs_merged = ["".join(par.split(" -- ")[:-1]) for par in paragraphs_merged]
     updated_article = str(sep.join(paragraphs_merged))
     updated_article = updated_article.replace("[{'summary_text': '", "").replace("'}]", "").strip()
-    class_res = pd.read_csv("./experiments/classification.csv")
+    class_res = pd.read_csv("./util/experiments/classification.csv")
     if class_res.target.values.all() == 0: modified="False"
 
     if len(data_test)==1: 
         modified="TRUE"
         updated_article = call_gpt(input_article, input_trigger)
-    with open("./experiments/updated_article.txt", "w") as f:
+    with open("./util/experiments/updated_article.txt", "w") as f:
         f.write(updated_article)
 
     # combine the predictions and paragraphs into csv format file
-    merged_par_pred_df = pd.DataFrame({"paragraphs": data_test, "predictions": predictions}).to_csv("./experiments/par_with_class.csv")
+    merged_par_pred_df = pd.DataFrame({"paragraphs": data_test, "predictions": predictions}).to_csv("./util/experiments/par_with_class.csv")
     # return updated_article, modified, merged_par_pred_df
     modified_in_all = str(len(paragraphs_needed)) + " / " + str(len(data_test))
     return updated_article, modified_in_all
 
 def copy_to_clipboard(t):
-    with open("./experiments/updated_article.txt", "r") as f:
+    with open("./util/experiments/updated_article.txt", "r") as f:
         t = f.read()
         pyperclip.copy(t)
 
@@ -369,5 +368,5 @@ with gr.Blocks() as demo:
         """
         )
 
-demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=7840)
 
