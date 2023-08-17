@@ -125,7 +125,7 @@ def config():
     load_dotenv()
 
 def call_gpt(paragraph, trigger):
-    # openai.api_key = os.environ.get("GPT-API")
+    openai.api_key = os.environ.get("GPT-API")
     tokenizer = BartTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     inputs_for_gpt = f"""
 s an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.Remember, the length of updated paragraph is restricted into a single paragraph.
@@ -267,9 +267,30 @@ def main(input_article, input_trigger):
     # merge updated paragraphs with non-updated paragraphs
     paragraphs_merged = data_test.copy()
     paragraphs_merged = [str(par).split(" -- ")[0] for par in paragraphs_merged]
+    paragraphs_old = paragraphs_merged.copy()
     for idx in range(len(pos_ids)):
         paragraphs_merged[pos_ids[idx]] = updated_paragraphs[idx]
+    global_pos = [pos_ids[idx] for idx in range(len(pos_ids))]
 
+    updated_color_sents = []
+    old_color_sents = []
+    for idx in range(len(paragraphs_merged)):
+        if idx not in global_pos:
+            # color_sents[paragraphs_merged]="white"
+            tup = (paragraphs_merged[idx]+"\n", "Unchanged")
+            updated_color_sents.append(tup)
+        else: 
+            tup = (paragraphs_merged[idx]+"\n", "Updated")
+            updated_color_sents.append(tup)
+    for idx in range(len(paragraphs_old)):
+        if idx not in global_pos:
+            tup = (paragraphs_old[idx]+"\n", "Unchanged")
+            old_color_sents.append(tup)
+        else:
+            tup = (paragraphs_old[idx]+"\n", "Modified")
+            old_color_sents.append(tup)
+
+            
     sep = "\n"
     # paragarphs_merged = ["".join(par.split(" -- ")[:-1]) for par in paragraphs_merged]
     updated_article = str(sep.join(paragraphs_merged))
@@ -285,9 +306,10 @@ def main(input_article, input_trigger):
 
     # combine the predictions and paragraphs into csv format file
     merged_par_pred_df = pd.DataFrame({"paragraphs": data_test, "predictions": predictions}).to_csv("./util/experiments/par_with_class.csv")
-    # return updated_article, modified, merged_par_pred_df
-    modified_in_all = str(len(paragraphs_needed)) + " / " + str(len(data_test))
-    return updated_article, modified_in_all
+    # modified_in_all = str(len(paragraphs_needed)) + " / " + str(len(data_test))
+    # return formatted_input, updated_article
+    # return formatted_input, updated_color_sents
+    return old_color_sents, updated_color_sents
 
 def copy_to_clipboard(t):
     with open("./util/experiments/updated_article.txt", "r") as f:
@@ -328,17 +350,32 @@ with gr.Blocks() as demo:
             </div>"""
         )
     with gr.Tab("Article Updating"):
+        gr.Markdown("### Reference examples can be found in the subsequent tab.")
         input_1 = gr.Textbox(label="Non-updated Article", lines=2, placeholder="Input the contexts...")
         input_2 = gr.Textbox(label="Triggered News Event", lines=1, placeholder="Input the triggered news event...") 
-        btn = gr.Button(value="Submit")
         with gr.Row():
-            output_1 = gr.Textbox(label="Updated Article", lines=5)
-            output_2 = gr.Textbox(label="#MODIFIED / #ALL")
+            gr.ClearButton([input_1, input_2])
+            btn = gr.Button(value="Submit")
+        with gr.Row():
+            # output_1 = gr.Textbox(label="Non-updated Article", lines=5, placeholder="Please fill the textboxes above, then click 'Submit'")
+            output_1 = gr.HighlightedText(label="Non-updated Article")
+            # output_2 = gr.Textbox(label="Updated Article", lines=5)
+            output_2 = gr.HighlightedText(label="Updated Article")
         btn.click(fn=main, inputs=[input_1, input_2], outputs=[output_1, output_2])
-        btn_copy = gr.Button(value="Copy Updated Article to Clipboard")
-        btn_copy.click(fn=copy_to_clipboard, inputs=[output_1], outputs=[])
+        btn_copy = gr.Button(value="Copy Updated Article to clipboard")
+        btn_copy.click(fn=copy_to_clipboard, inputs=[output_2], outputs=[])
+
+        com_1_value, com_2_value = "Pls finish article updating, then click the button above", "Pls finish article updating, then click the button above."
+   #  with gr.Tab("Compare between versions"):
+   #      btn_com = gr.Button(value="Differences Highlighting")
+   #      with gr.Row():
+   #          com_1 = gr.Textbox(label="Non-update Paragraphs", value=com_1_value, lines=15)
+   #          com_2 = gr.Textbox(label="Updated Paragraphs", value=com_2_value, lines=15)
+   #      btn_com.click(fn=compare_versions, inputs=[], outputs=[com_1, com_2])
+    with gr.Tab("Examples"):
         gr.Markdown("## Input Examples")
-        gr.Markdown("### There are 2 examples below, click them to test inputs automatically!")
+        gr.Markdown("### Two examples are provided below; please select one to auto-populate the inputs.")
+        gr.Markdown("### Kindly select one of the provided examples, then return to the 'Article Updating' mode to assess the outcomes.")
         gr.Examples(
             examples=[[exin_1, trigger_1], [exin_2, trigger_2]],
             fn=main,
@@ -347,13 +384,7 @@ with gr.Blocks() as demo:
             # cache_examples=True,
             # run_on_click=True,
                 ),
-        com_1_value, com_2_value = "Pls finish article updating, then click the button above", "Pls finish article updating, then click the button above."
-    with gr.Tab("Compare between versions"):
-        btn_com = gr.Button(value="Differences Highlighting")
-        with gr.Row():
-            com_1 = gr.Textbox(label="Non-update Article", value=com_1_value, lines=15)
-            com_2 = gr.Textbox(label="Updated Article", value=com_2_value, lines=15)
-        btn_com.click(fn=compare_versions, inputs=[], outputs=[com_1, com_2])
+        
     gr.HTML("""
             <div align="center">
                 <p>
