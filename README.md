@@ -1,32 +1,49 @@
-# Event Triggered Article Updating
+# Event Triggered Article Updating System
 
-## Preprocessing 
-- Run sentence-level difference labeling with `netku_edit.py`
+<p align="center">
+✍️ <a href="http://140.119.164.212:7840 target="_blank">Online Demo</a> 
+•
+🤗 <a href="https://huggingface.co/theQuert" target="_blank">HF Repo</a>
+•
+📃 <a href="https://dl.acm.org/doi/10.1145/3511808.3557537" target="_blank">[Paper]</a>  
 
-## Model
-- Under `util/`.
+## Overview
+Event Triggered Article Updating System (NetKUp) is a long article updating application for knowledge update.
 
-## Source of our dataset
-[Data](https://github.com/hhhuang/NetKu)
+**NetKUp** trained on [NetKu dataset](https://github.com/hhhuang/NetKu) for knowledge updating task.
 
-## Modified Dataset to fit our task
-[Data](https://drive.google.com/drive/folders/1fMz10Dts2pxFp0Hz_-EVYoBJEEZERGsL?usp=sharing)
+## Demo
+A live demonstation of the model can be accessed at [Live Demo](http://140.119.164.212:7840) with GPU support, and [HF Space](https://huggingface.co/spaces/theQuert/Event-Triggered-Article-Updating-System) with CPU support.
 
-## Bidirectional Sentence Labeling
-![bidirectional_labeling](https://raw.githubusercontent.com/theQuert/NetKu_Processing/main/bi_labeling.png)
+## Key Features
+1. **Long texts input support**: Curently due to the limitation of LLMs, long context input is not clearly understood, and hard to capture relationshtip between pargraphs. We make it suitable for longer inputs.
 
-## Slides
-[Google Slides](https://docs.google.com/presentation/d/1Wku83ckWwYP26hAqMmsWmURScCrNR5B7aWaKZAYEspg/edit?usp=sharing)
+2. **Instruction-Tuned**: We provide multiple baselines, including fine-tuned our data on **Alpaca**, **Vicuna**,  and GPT based models.
 
-## References
-#### [A Multi-grained Dataset for News Event Triggered Knowledge Update](https://dl.acm.org/doi/10.1145/3511808.3557537)
-#### [PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization](https://github.com/allenai/PRIMER)
-#### [NewsEdits: A News Article Revision Dataset and a Document-Level Reasoning Challenge](https://github.com/isi-nlp/NewsEdits)
-#### [Updated Headline Generation: Creating Updated Summaries for Evolving News Stories](https://aclanthology.org/2022.acl-long.446)
-#### [DYLE: Dynamic Latent Extraction for Abstractive Long-Input Summarization](https://ui.adsabs.harvard.edu/abs/2021arXiv211008168M)
-#### [EditEval: An Instruction-Based Benchmark for Text Improvements](https://ui.adsabs.harvard.edu/abs/2022arXiv220913331D)
-#### [Attention Temperature Matters in Abstractive Summarization Distillation](https://ui.adsabs.harvard.edu/abs/2021arXiv210603441Z)
-#### [Graph-to-Text Generation with Dynamic Structure Pruning](https://ui.adsabs.harvard.edu/abs/2022arXiv220907258L)
-#### [Improving Wikipedia Verifiability with AI](https://ui.adsabs.harvard.edu/abs/2022arXiv220706220P)
-#### [Efficiently Summarizing Text and Graph Encodings of Multi-Document Clusters](https://aclanthology.org/2021.naacl-main.380)
-#### [Leveraging Locality in Abstractive Text Summarization](https://ui.adsabs.harvard.edu/abs/2022arXiv220512476L)
+3. **Model Architecture**: We proposed the new construction of Encoder-Decoder based model. And further prove the effectiveness of our model.
+
+## TBD
+- [ ]**Paper**
+
+## Citations
+If you use our code, data, or models in your research, please cite this repository. You can use the following BibTeX entry:
+
+```bibtext
+@inproceedings{lee2022multi,
+  title={A Multi-grained Dataset for News Event Triggered Knowledge Update},
+  author={Lee, Yu-Ting and Tang, Ying-Jhe and Cheng, Yu-Chung and Chen, Pai-Lin and Li, Tsai-Yen and Huang, Hen-Hsen},
+  booktitle={Proceedings of the 31st ACM International Conference on Information \& Knowledge Management},
+  pages={4158--4162},
+  year={2022}
+}
+```
+
+## License
+The code in this project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
+
+## OpenAI Data Acknowledgment
+The text generation included in this project were generated using OpenAI's models and are subject to OpenAI's Terms of Use. Please review [OpenAI's Terms of Use](https://openai.com/policies/terms-of-use) for details on usage and limitations.
+
+## Acknowledgements
+
+We thank [Meta LLaMA team](https://github.com/facebookresearch/llama), [Vicuna team](https://github.com/lm-sys/FastChat), [NewsEdits](https://github.com/isi-nlp/NewsEdits) for their contributions.
