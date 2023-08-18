@@ -1,7 +1,7 @@
 # Event Triggered Article Updating System
 
 <p align="center">
-✍️ <a href="http://140.119.164.212:7840 target="_blank">Online Demo</a> 
+✍️ <a href="http://140.119.164.212:7840" target="_blank">Online Demo</a> 
 •
 🤗 <a href="https://huggingface.co/theQuert" target="_blank">HF Repo</a>
 •
