@@ -45,9 +45,9 @@ The code in this project is licensed under the Apache 2.0 License - see the [LIC
 The text generation included in this project were generated using OpenAI's models and are subject to OpenAI's Terms of Use. Please review [OpenAI's Terms of Use](https://openai.com/policies/terms-of-use) for details on usage and limitations.
 
 ## Acknowledgements
-This work is partially supported by 
+This work is supported by 
 1. [**National Science and Technology Council, Taiwan**](https://www.nstc.gov.tw/?l=en), under grants `109-2222-E-001-004-MY3` and `109-2628-H-004-001-MY4`.
 2. [**Institute of Information Science, Academia Sinica, Taiwan**](https://www.iis.sinica.edu.tw/en/index.html/).
 3. [**National Chengchi University, Taiwan**](https://www.nccu.edu.tw/).
-4. We thank [**Meta LLaMA team**](https://github.com/facebookresearch/llama), [**Vicuna team**](https://github.com/lm-sys/FastChat), and [**NewsEdits**](https://github.com/isi-nlp/NewsEdits) for their contributions.
+4. We thank [**Meta LLaMA team**](https://github.com/facebookresearch/llama), [**Vicuna team**](https://github.com/lm-sys/FastChat), [**Lightning AI**](https://lightning.ai/)and [**ISI-NLP**](https://github.com/isi-nlp/NewsEdits) for their contributions.
 
