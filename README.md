@@ -49,5 +49,5 @@ This work is supported by
 1. [**National Science and Technology Council, Taiwan**](https://www.nstc.gov.tw/?l=en), under grants `109-2222-E-001-004-MY3` and `109-2628-H-004-001-MY4`.
 2. [**Institute of Information Science, Academia Sinica, Taiwan**](https://www.iis.sinica.edu.tw/en/index.html/).
 3. [**National Chengchi University, Taiwan**](https://www.nccu.edu.tw/).
-4. We thank [**Meta LLaMA team**](https://github.com/facebookresearch/llama), [**Vicuna team**](https://github.com/lm-sys/FastChat), [**Lightning AI**](https://lightning.ai/)and [**ISI-NLP**](https://github.com/isi-nlp/NewsEdits) for their contributions.
+4. We thank [**Meta LLaMA team**](https://github.com/facebookresearch/llama), [**Vicuna team**](https://github.com/lm-sys/FastChat), [**Lightning AI**](https://lightning.ai/) and [**ISI-NLP**](https://github.com/isi-nlp/NewsEdits) for their contributions.
 
