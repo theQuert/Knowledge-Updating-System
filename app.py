@@ -125,7 +125,8 @@ def config():
     load_dotenv()
 
 def call_gpt(paragraph, trigger):
-    openai.api_key = os.environ.get("GPT-API")
+    # openai.api_key = os.environ.get("GPT-API")
+    openai.api_key = "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"
     tokenizer = BartTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     inputs_for_gpt = f"""
 s an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.Remember, the length of updated paragraph is restricted into a single paragraph.

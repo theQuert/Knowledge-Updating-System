@@ -1,0 +1,52 @@
+<mxfile host="app.diagrams.net" modified="2023-09-03T14:59:06.820Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="7x2MpH2PQbg2kWEuZEb9" version="21.7.2" type="device">
+  <diagram name="第 1 页" id="3oWqkbbEkvhZxdiXQYkt">
+    <mxGraphModel dx="1004" dy="616" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="abk5v7BG2gCQEoY8Ww9Y-2" target="abk5v7BG2gCQEoY8Ww9Y-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="abk5v7BG2gCQEoY8Ww9Y-2" target="abk5v7BG2gCQEoY8Ww9Y-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.583;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="abk5v7BG2gCQEoY8Ww9Y-2" target="abk5v7BG2gCQEoY8Ww9Y-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-2" value="WCEP資料集&lt;br&gt;--------------&lt;br&gt;Common Crawl News擴增&lt;br&gt;---------------&lt;br&gt;Newspaper3k&lt;br&gt;擴增" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="280" y="120" width="90" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-3" value="更新前之知識內容&lt;br&gt;Non-updated Content" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-5" value="新聞事件&lt;br&gt;Triggered News" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-6" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,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;" vertex="1" parent="1">
+          <mxGeometry x="222.82" y="313" width="57.18" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-7" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,iVBORw0KGgoAAAANSUhEUgAAAEgAAAA3EAYAAAD/CdAQAAABdWlDQ1BrQ0dDb2xvclNwYWNlRGlzcGxheVAzAAAokXWQvUvDUBTFT6tS0DqIDh0cMolD1NIKdnFoKxRFMFQFq1OafgltfCQpUnETVyn4H1jBWXCwiFRwcXAQRAcR3Zw6KbhoeN6XVNoi3sfl/Ticc7lcwBtQGSv2AijplpFMxKS11Lrke4OHnlOqZrKooiwK/v276/PR9d5PiFlNu3YQ2U9cl84ul3aeAlN//V3Vn8maGv3f1EGNGRbgkYmVbYsJ3iUeMWgp4qrgvMvHgtMunzuelWSc+JZY0gpqhrhJLKc79HwHl4plrbWD2N6f1VeXxRzqUcxhEyYYilBRgQQF4X/8044/ji1yV2BQLo8CLMpESRETssTz0KFhEjJxCEHqkLhz634PrfvJbW3vFZhtcM4v2tpCAzidoZPV29p4BBgaAG7qTDVUR+qh9uZywPsJMJgChu8os2HmwiF3e38M6Hvh/GMM8B0CdpXzryPO7RqFn4Er/QcXKWq8UwZBywAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAASKADAAQAAAABAAAANwAAAADIexPLAAABOElEQVR4Ae3YIY7CQBQGYEj2FGQNB9iAI+t6BAyeq3AEboDiDEgEAgFnQEFQBCxpAuK1joQEQ1/zVXSamUznf9+41+l4CBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECHxVoPvV0z8+vPcbW/vV+PGPGrKxrHLsd/FR1hMNyde6GKdDlPR4tGucjLNd1U+2wJF3tY7xv4gx+/teFXA8Z69EfgIECBAgQIAAAQIE3ggk7QMVRdT1N3xTX5Lluu2zXETg2zVJ8KwxLy3tA02n2W4kaR9oNg/o0SAb+Ou8dR9os329bpYAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAg0ACBJ+eGf1A1///HAAAAAElFTkSuQmCC;" vertex="1" parent="1">
+          <mxGeometry x="390" y="321.5" width="48.43" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-8" value="更新後之知識內容&lt;br&gt;Updated Content" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="438.43" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-14" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="329.47" y="370" as="sourcePoint" />
+            <mxPoint x="329.47" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="abk5v7BG2gCQEoY8Ww9Y-15" target="abk5v7BG2gCQEoY8Ww9Y-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-15" value="PRIMERA 文本生成模型&lt;br&gt;-----------------------&lt;br&gt;Fine-tuned PRIMERA" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="420" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="abk5v7BG2gCQEoY8Ww9Y-17" value="評估多粒度資料集之基準效能&lt;br&gt;----------------------------&lt;br&gt;以全文內容為改善目標" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="245" y="525" width="170" height="75" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
