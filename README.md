@@ -1,29 +1,33 @@
 # Event Triggered Article Updating System
 
 <p align="center">
-✍️ <a href="http://140.119.164.212:7840" target="_blank">Online Demo</a> 
+✍️ <a href="http://140.119.164.212:7840" target="_blank"><b>Online Demo</b></a> 
 •
-🤗 <a href="https://huggingface.co/theQuert" target="_blank">HF Repo</a>
+🤗 <a href="https://huggingface.co/theQuert" target="_blank"><b>HF Repo</b></a>
 •
-📃 <a href="https://dl.acm.org/doi/10.1145/3511808.3557537" target="_blank">[Paper]</a>  
+📃 <a href="https://dl.acm.org/doi/10.1145/3511808.3557537" target="_blank"><b>Paper</b></a>  
+•
+📎 <a href="https://github.com/theQuert/Event-Triggered-Article-Updating-System/tree/main/docs/YTLee_s_Oral_Presentation.pdf" target="_blank"><b>Presentation</b></a>
+•
+🗒️ <a href="" target="_blank"><b>Master's Thesis</b></a>
 
 ## Overview
-Event Triggered Article Updating System (NetKUp) is a long article updating application for knowledge update.
+**Event Triggered Article Updating System** is a long article updating application for knowledge update.
 
-**NetKUp** trained on [NetKu dataset](https://github.com/hhhuang/NetKu) for knowledge updating task.
+The whole system is trained on [**NetKu dataset**](https://github.com/hhhuang/NetKu) for *knowledge updating in full-text triggered by a News Event*.
 
 ## Demo
 A live demonstation of the model can be accessed at [Live Demo](http://140.119.164.212:7840) with GPU support, and [HF Space](https://huggingface.co/spaces/theQuert/Event-Triggered-Article-Updating-System) with CPU support.
 
 ## Key Features
-1. **Long texts input support**: Curently due to the limitation of LLMs, long context input is not clearly understood, and hard to capture relationshtip between pargraphs. We make it suitable for longer inputs.
+1. **Long texts input support**: Curently due to the limitation of LLMs, long context input is not clearly understood, and also hard to capture relationshtip between pargraphs. We make it suitable for longer inputs. The input lengths for full-article is **unlimited** as long as each paragraph is not longer then 4,096 tokens.
 
 2. **Instruction-Tuned**: We provide multiple baselines, including fine-tuned our data on **Alpaca**, **Vicuna**,  and GPT based models.
 
 3. **Model Architecture**: We proposed the new construction of Encoder-Decoder based model. And further prove the effectiveness of our model.
 
 ## TBD
-- [ ]**Paper**
+- **Master's Thesis**
 
 ## Citations
 If you use our code, data, or models in your research, please cite this repository. You can use the following BibTeX entry:
