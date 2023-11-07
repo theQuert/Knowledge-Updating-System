@@ -9,7 +9,7 @@
 •
 📎 <a href="https://github.com/theQuert/Event-Triggered-Article-Updating-System/tree/main/docs/YTLee_s_Oral_Presentation.pdf" target="_blank"><b>Presentation</b></a>
 •
-🗒️ <a href="" target="_blank"><b>Master's Thesis</b></a>
+🗒️ <a href="https://drive.google.com/file/d/1RzfgyGdtvYvein9Z34xLVSlGLViz_UH9/view?usp=sharing" target="_blank"><b>Master's Thesis</b></a>
 
 ## Overview
 **Event Triggered Article Updating System** is a long article updating application for knowledge update.
@@ -26,8 +26,6 @@ A live demonstation of the model can be accessed at [Live Demo](http://140.119.1
 
 3. **Model Architecture**: We proposed the new construction of Encoder-Decoder based model. And further prove the effectiveness of our model.
 
-## TBD
-- **Master's Thesis**
 
 ## Citations
 If you use our code, data, or models in your research, please cite this repository. You can use the following BibTeX entry:
