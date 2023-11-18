@@ -1,4 +1,4 @@
-# Event Triggered Article Updating System
+# Full-Text Level Knowledge Updating System
 
 <p align="center">
 ✍️ <a href="http://140.119.164.212:7840" target="_blank"><b>Online Demo</b></a> 
