@@ -30,7 +30,7 @@ A live demonstation of the model can be accessed at [Live Demo](http://140.119.1
 ## Citations
 If you use our code, data, or models in your research, please cite this repository. You can use the following BibTeX entry:
 
-```bibtext
+```bibtex
 @inproceedings{lee2022multi,
   title={A Multi-grained Dataset for News Event Triggered Knowledge Update},
   author={Lee, Yu-Ting and Tang, Ying-Jhe and Cheng, Yu-Chung and Chen, Pai-Lin and Li, Tsai-Yen and Huang, Hen-Hsen},
