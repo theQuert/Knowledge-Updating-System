@@ -14,17 +14,19 @@
 ## Overview
 **Event Triggered Article Updating System** is a long article updating application for knowledge update.
 
+Spearheaded the development of an Event Triggered Article Updating System, a cutting-edge application designed for updating long articles with new knowledge. This project showcases a significant advancement in handling full-text knowledge updating triggered by news events, leveraging the capabilities of large language models (LLMs).
+
 The whole system is trained on [**NetKu dataset**](https://github.com/hhhuang/NetKu) for *knowledge updating in full-text triggered by a News Event*.
 
 ## Demo
 A live demonstation of the model can be accessed at [Live Demo](http://140.119.164.212:7840) with GPU support, and [HF Space](https://huggingface.co/spaces/theQuert/Event-Triggered-Article-Updating-System) with CPU support.
 
 ## Key Features
-1. **Long texts input support**: Curently due to the limitation of LLMs, long context input is not clearly understood, and also hard to capture relationshtip between pargraphs. We make it suitable for longer inputs. The input lengths for full-article is **unlimited** as long as each paragraph is not longer then 4,096 tokens.
+1. **Long texts input support**: Overcame the limitations of existing LLMs by enabling the system to understand and process long context inputs. Developed a unique approach allowing for unlimited full-article input lengths, with each paragraph handling up to 4,096 tokens.
 
-2. **Instruction-Tuned**: We provide multiple baselines, including fine-tuned our data on **Alpaca**, **Vicuna**,  and GPT based models.
+2. **Instruction-Tuned Models**: Implemented multiple baseline models, including those fine-tuned on LLaMA, Alpaca, Vicuna, and GPT-based models, demonstrating versatility and adaptability in model training.
 
-3. **Model Architecture**: We proposed the new construction of Encoder-Decoder based model. And further prove the effectiveness of our model.
+3. **Innovative Model Architecture**: Proposed and developed a new Encoder-Decoder based model architecture. Conducted comprehensive evaluations to prove the effectiveness of this novel approach in the context of knowledge updating.
 
 
 ## Citations
