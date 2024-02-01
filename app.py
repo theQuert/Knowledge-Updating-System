@@ -27,7 +27,9 @@ from datasets import Dataset, load_metric
 import datasets
 import gradio as gr
 import pyperclip
+# from openai import OpenAI
 import openai
+
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from transformers import TrainingArguments, Trainer
 # from vicuna_generate import *
@@ -125,8 +127,6 @@ def config():
     load_dotenv()
 
 def call_gpt(paragraph, trigger):
-    # openai.api_key = os.environ.get("GPT-API")
-    openai.api_key = "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"
     tokenizer = BartTokenizer.from_pretrained("theQuert/NetKUp-tokenzier")
     inputs_for_gpt = f"""
 s an article writer, your task is to provide an updated paragraph in the length same as non-updated paragraph based on the given non-updated paragraph and a triggered news.Remember, the length of updated paragraph is restricted into a single paragraph.
@@ -136,12 +136,10 @@ s an article writer, your task is to provide an updated paragraph in the length 
     Triggered News:
     {trigger}
         """
-    completion = openai.ChatCompletion.create(
-         model = "gpt-3.5-turbo",
-         messages = [
-             {"role": "user", "content": inputs_for_gpt}
-         ]
-     )
+    completion = openai.chat.completions.create(model = "gpt-3.5-turbo-1106",
+    messages = [
+        {"role": "user", "content": inputs_for_gpt}
+    ])
     response = completion.choices[0].message.content
     if "<"+response.split("<")[-1].strip() == "<"+paragraph.split("<")[-1].strip(): response = response 
     else: response = response + " <"+paragraph.split("<")[-1].strip()
@@ -165,7 +163,7 @@ As an article writer, your task is to provide an updated paragraph in the length
     return responses
 
     
-def main(input_article, input_trigger):
+def main(input_key, input_article, input_trigger):
     paths = [".util/experiments/input_paragraphs.csv",
              "./util/experiments/formatted_input.txt",
              "./util/experiments/updated_article.txt",
@@ -176,6 +174,7 @@ def main(input_article, input_trigger):
              "./util/experiments/paragraphs_needed.csv",
              "./util/experiments/par_with_class.csv",
              ]
+    openai.api_key = input_key
     for path in paths: 
         try:
             if os.path.isfile(path): os.remove(path)
@@ -351,18 +350,18 @@ with gr.Blocks() as demo:
             </div>"""
         )
     with gr.Tab("Article Updating"):
-        gr.Markdown("### Reference examples can be found in the subsequent tab.")
+        gr.Markdown("### Reference examples could be found in the subsequent tab.")
+        gr.Markdown("#### Enter OpenAI API Key for further processing...")
+        input_key = gr.Textbox(label="OpenAI API Key", lines=1, placeholder="sh-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         input_1 = gr.Textbox(label="Non-updated Article", lines=2, placeholder="Input the contexts...")
         input_2 = gr.Textbox(label="Triggered News Event", lines=1, placeholder="Input the triggered news event...") 
         with gr.Row():
             gr.ClearButton([input_1, input_2])
             btn = gr.Button(value="Submit")
         with gr.Row():
-            # output_1 = gr.Textbox(label="Non-updated Article", lines=5, placeholder="Please fill the textboxes above, then click 'Submit'")
             output_1 = gr.HighlightedText(label="Non-updated Article")
-            # output_2 = gr.Textbox(label="Updated Article", lines=5)
             output_2 = gr.HighlightedText(label="Updated Article")
-        btn.click(fn=main, inputs=[input_1, input_2], outputs=[output_1, output_2])
+        btn.click(fn=main, inputs=[input_key, input_1, input_2], outputs=[output_1, output_2])
         btn_copy = gr.Button(value="Copy Updated Article to clipboard")
         btn_copy.click(fn=copy_to_clipboard, inputs=[output_2], outputs=[])
 
